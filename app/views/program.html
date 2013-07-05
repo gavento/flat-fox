@@ -6,9 +6,9 @@
 
     <div class="btn-group">
       <button ng-click="program.step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
-      <button ng-click="play()" class="btn c-start" ng-show="!playing"><i class="icon-play"></i></button>
+      <button ng-click="play()" class="btn c-start" ng-show="!playing" ng-disabled="program.finished"><i class="icon-play"></i></button>
       <button ng-click="playing = false" class="btn c-pause" ng-show="playing"><i class="icon-pause"></i></button>
-      <button ng-click="program.reset()" class="btn c-stop" ng-disabled="!program.running"><i class="icon-stop"></i></button>
+      <button ng-click="clickStop()" class="btn c-stop" ng-disabled="!program.running"><i class="icon-stop"></i></button>
     </div>
     <label class="c-delay">
       Delay [ms] <input ng-model="delay" class="span1 c-delay" type="text">

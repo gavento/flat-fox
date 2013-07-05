@@ -21,7 +21,7 @@ angular.module('flatFoxApp')
         d = $scope.delay
       else
         d = 0.01
-      while d < 20
+      while d < 10
         mult *= 2; d *= 2
 
       f = (apply = true)->
@@ -34,6 +34,10 @@ angular.module('flatFoxApp')
           $scope.$apply()
         $window.setTimeout f, d
       f(false)
+
+    $scope.clickStop = ->
+      $scope.playing = false
+      $scope.program.reset()
 
     $scope.clickCell = (x, y) ->
       if typeof x == "string" then x = Number(x).toPrecision(1)

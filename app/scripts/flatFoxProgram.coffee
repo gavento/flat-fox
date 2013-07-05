@@ -19,9 +19,11 @@ class FlatFoxProgram
 
   setTile: (x, y, color, symbol) ->
     if x >= 0 and y >= 0 and x < @w and y < @h
-      dirty = (symbol == "@" or @program[y][x].symbol == "@")
+      overwrite = (@program[y][x].symbol == "@")
       @program[y][x] = { symbol: symbol, color: color }
-      if dirty
+      if (symbol == "@") and (@headX >= 0) and ((@headX != x) or (@headY != y))
+        @program[@headY][@headX] = @defaultTile
+      if overwrite or (symbol == "@")
         [@headX, @headY] = @findStart()
 
   resizeProgram: (w, h) ->
@@ -111,10 +113,10 @@ class FlatFoxProgram
       return { text: "No start (@) found.", type: "error" }
     
     if @finished
-      return { text: "Program finished after #{ $scope.program.steps } steps.", type: "warning" }
+      return { text: "Program finished after #{ @steps } steps.", type: "warning" }
     
     if @running
-      return { text: "Program running, made #{ $scope.program.steps } steps.", type: "success" }
+      return { text: "Program running, made #{ @steps } steps.", type: "success" }
 
     return { text: "FlatFox is flat.", type: "info" }
 
