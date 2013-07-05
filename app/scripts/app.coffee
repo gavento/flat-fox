@@ -1,10 +1,11 @@
 'use strict'
 
-angular.module('flatFoxAngularApp', [])
+angular.module('flatFoxApp',
+    ['ui.bootstrap'])
   .config ($routeProvider) ->
     $routeProvider
-      .when '/',
-        templateUrl: 'views/main.html'
-        controller: 'MainCtrl'
+      .when '',
+        templateUrl: 'views/program.html'
+        controller: 'ProgramCtrl'
       .otherwise
-        redirectTo: '/'
+        redirectTo: ''

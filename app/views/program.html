@@ -1,0 +1,60 @@
+<div class="program">
+
+  <div class="control well well-small form-inline">
+    <input ng-repeat="cell in program.memory" type="text"
+      ng-model="program.memory[$index]" ng-class="['c-'+'RGBCMY'[$index], 'span1']">
+
+    <div class="btn-group">
+      <button ng-click="program.step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
+      <button ng-click="play()" class="btn c-start" ng-show="!playing"><i class="icon-play"></i></button>
+      <button ng-click="playing = false" class="btn c-pause" ng-show="playing"><i class="icon-pause"></i></button>
+      <button ng-click="program.reset()" class="btn c-stop" ng-disabled="!program.running"><i class="icon-stop"></i></button>
+    </div>
+    <label class="c-delay">
+      Delay [ms] <input ng-model="delay" class="span1 c-delay" type="text">
+    </label>
+<!--    <label class="c-steps">
+      Steps: <input class="span1 c-steps" ng-model="program.steps" type="number" disabled>
+    </label> -->
+  </div>
+
+  <div class='editor well well-small form-inline'>
+    <div class='e-colors btn-group'>
+        <button class="btn e-R" ng-model="color" btn-radio="'R'">R</button>
+        <button class="btn e-G" ng-model="color" btn-radio="'G'">G</button>
+        <button class="btn e-B" ng-model="color" btn-radio="'B'">B</button>
+        <button class="btn e-C" ng-model="color" btn-radio="'C'">C</button>
+        <button class="btn e-M" ng-model="color" btn-radio="'M'">M</button>
+        <button class="btn e-Y" ng-model="color" btn-radio="'Y'">Y</button>
+        <button class="btn e-N" ng-model="color" btn-radio="' '"><i class="icon-adjust"></i></button>
+    </div>
+    <div class='e-tiles btn-group'>
+        <button class="btn" ng-model="symbol" btn-radio="'+'" ng-class="'c-'+color" ng-disabled="color==' '">+</button>
+        <button class="btn" ng-model="symbol" btn-radio="'-'" ng-disabled="color==' '">-</button>
+        <button class="btn" ng-model="symbol" btn-radio="'<'"><i class='icon-arrow-left'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'>'"><i class='icon-arrow-right'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'^'"><i class='icon-arrow-up'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'v'"><i class='icon-arrow-down'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'.'" ng-click="color=' '">.</button>
+        <button class="btn" ng-model="symbol" btn-radio="'@'" ng-click="color=' '">@</button>
+        <button class="btn e-+" ng-model="symbol" btn-radio="'#'" ng-click="color=' '">#</button>
+    </div>
+
+    <button class="btn" ng-click="save()">Save</button>
+    {view App.LoadFileView class="span3"}
+  </div>
+
+  <div class="alert {{ 'alert-' + program.statusMessage().type }}">{{ program.statusMessage().text }}</div>
+
+  <div class="program">
+    <table>
+      <tr ng-repeat="y in rows()">
+	<td ng-repeat="x in columns()" ng-click="clickCell(x, y)"
+	  class="{{ 'p-cell-' + program.getTile(x, y).color}} {{ headClassAt(x, y) }}"
+	  ng-bind-html-unsafe="program.getTile(x, y).symbol | tileSymbol">
+	</td>
+      </tr>
+    </table>
+  </div>
+
+</div>

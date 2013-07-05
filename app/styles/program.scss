@@ -1,0 +1,88 @@
+@import "compass";
+
+.display-none {
+  display: none;
+}
+
+html, body {
+  margin: 20px;
+  background: #EEE;
+}
+
+.editor, .control, .table {
+  background: #DDD;
+  margin: 5px;
+  padding: 5px;
+}
+
+$color-list: #FF7777 #77FF77 #7777FF #77FFFF #FF77FF #FFFF77 #DDDDDD;
+$color-names: R G B C M Y N;
+
+@for $i from 1 through length($color-list) {
+
+  .editor .e-#{nth($color-names, $i)} {
+    background: nth($color-list, $i);
+  }
+
+  .editor .e-tint-#{nth($color-names, $i)} {
+    background: nth($color-list, $i);
+  }
+
+  .control .c-#{nth($color-names, $i)} {
+    background: nth($color-list, $i);
+  }
+
+  .p-cell-#{nth($color-names, $i)} {
+    background: nth($color-list, $i);
+  }
+
+}
+
+.editor {
+  button {
+    font-weight: bold;
+  }
+  .active {
+    border: 2px solid #00000080;
+//  @include single-box-shadow; 
+    @include box-shadow(black 0px 0px 5px);
+  }
+}
+
+.control {
+  div.c-delay, div.c-steps {
+    margin: 0 2em
+  }
+}
+
+.program {
+
+  table {
+    margin: 1em auto;
+    background: #DDD;
+  }
+
+  td {
+    border: solid #AAA 1px;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .p-head-R {
+    background-image: url("../img/head-R.png");
+  }
+
+  .p-head-L {
+    background-image: url("../img/head-L.png");
+  }
+
+  .p-head-U {
+    background-image: url("../img/head-U.png");
+  }
+
+  .p-head-D {
+    background-image: url("../img/head-D.png");
+  }
+}
