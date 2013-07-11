@@ -1,8 +1,12 @@
 <div class="program">
 
   <div class="control well well-small form-inline">
-    <input ng-repeat="cell in program.memory" type="text"
-      ng-model="program.memory[$index]" ng-class="['c-'+'RGBCMY'[$index], 'span1']">
+    <input type="number" ng-model="program.memory[0]" class="c-R span1" ng-disabled="program.running">
+    <input type="number" ng-model="program.memory[1]" class="c-G span1" ng-disabled="program.running">
+    <input type="number" ng-model="program.memory[2]" class="c-B span1" ng-disabled="program.running">
+    <input type="number" ng-model="program.memory[3]" class="c-C span1" ng-disabled="program.running">
+    <input type="number" ng-model="program.memory[4]" class="c-M span1" ng-disabled="program.running">
+    <input type="number" ng-model="program.memory[5]" class="c-Y span1" ng-disabled="program.running">
 
     <div class="btn-group">
       <button ng-click="program.step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
@@ -13,9 +17,6 @@
     <label class="c-delay">
       Delay [ms] <input ng-model="delay" class="span1 c-delay" type="text">
     </label>
-<!--    <label class="c-steps">
-      Steps: <input class="span1 c-steps" ng-model="program.steps" type="number" disabled>
-    </label> -->
   </div>
 
   <div class='editor well well-small form-inline'>
@@ -28,20 +29,29 @@
         <button class="btn e-Y" ng-model="color" btn-radio="'Y'">Y</button>
         <button class="btn e-N" ng-model="color" btn-radio="' '"><i class="icon-adjust"></i></button>
     </div>
+
     <div class='e-tiles btn-group'>
-        <button class="btn" ng-model="symbol" btn-radio="'+'" ng-class="'c-'+color" ng-disabled="color==' '">+</button>
-        <button class="btn" ng-model="symbol" btn-radio="'-'" ng-disabled="color==' '">-</button>
-        <button class="btn" ng-model="symbol" btn-radio="'<'"><i class='icon-arrow-left'></i></button>
-        <button class="btn" ng-model="symbol" btn-radio="'>'"><i class='icon-arrow-right'></i></button>
-        <button class="btn" ng-model="symbol" btn-radio="'^'"><i class='icon-arrow-up'></i></button>
-        <button class="btn" ng-model="symbol" btn-radio="'v'"><i class='icon-arrow-down'></i></button>
-        <button class="btn" ng-model="symbol" btn-radio="'.'" ng-click="color=' '">.</button>
-        <button class="btn" ng-model="symbol" btn-radio="'@'" ng-click="color=' '">@</button>
-        <button class="btn e-+" ng-model="symbol" btn-radio="'#'" ng-click="color=' '">#</button>
+        <button class="btn" ng-model="symbol" btn-radio="'+'" ng-class="['e-tint-'+color]" ng-disabled="color==' '">+</button>
+        <button class="btn" ng-model="symbol" btn-radio="'-'" ng-class="['e-tint-'+color]" ng-disabled="color==' '">-</button>
+        <button class="btn" ng-model="symbol" btn-radio="'<'" ng-class="['e-tint-'+color]"><i class='icon-arrow-left'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'>'" ng-class="['e-tint-'+color]"><i class='icon-arrow-right'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'^'" ng-class="['e-tint-'+color]"><i class='icon-arrow-up'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'v'" ng-class="['e-tint-'+color]"><i class='icon-arrow-down'></i></button>
+        <button class="btn" ng-model="symbol" btn-radio="'.'">.</button>
+        <button class="btn" ng-model="symbol" btn-radio="'@'">@</button>
+        <button class="btn e-+" ng-model="symbol" btn-radio="'#'">#</button>
     </div>
+
+    <div class='btn-group' ng-show="enableResize">
+      <input type="number" ng-model="setw" class="span1" ng-disabled="program.running">
+      <input type="number" ng-model="seth" class="span1" ng-disabled="program.running">
+      <button ng-click="program.resizeProgram(setw, seth)" class="btn" ng-disabled="program.running">Resize</button>
+    </div>
+    <!--
 
     <button class="btn" ng-click="save()">Save</button>
     {view App.LoadFileView class="span3"}
+    -->
   </div>
 
   <div class="alert {{ 'alert-' + program.statusMessage().type }}">{{ program.statusMessage().text }}</div>

@@ -7,6 +7,9 @@ angular.module('flatFoxApp')
     $scope.delay = 300
     $scope.color = ' '
     $scope.symbol = '.'
+    $scope.setw = $scope.program.w
+    $scope.seth = $scope.program.h
+    $scope.enableResize = true
 
     $scope.setMessage = (m = "Flat fox is flat and ready", c = "success") ->
       $scope.message = m
@@ -42,11 +45,16 @@ angular.module('flatFoxApp')
     $scope.clickCell = (x, y) ->
       if typeof x == "string" then x = Number(x).toPrecision(1)
       if typeof y == "string" then y = Number(y).toPrecision(1)
-      $scope.program.setTile(x, y, $scope.color, $scope.symbol)
+      color = if $scope.symbol in ".@#" then " " else $scope.color
+      $scope.program.setTile(x, y, color, $scope.symbol)
 
     $scope.$watch 'color', ->
       if $scope.color == " " and $scope.symbol in ["+", "-"]
         $scope.symbol = "."
+
+    $scope.$watch ['program.w', 'program.h'], ->
+      setw = program.w
+      seth = program.h
 
     $scope.rows = -> [0..($scope.program.h-1)]
     $scope.columns = -> [0..($scope.program.w-1)]

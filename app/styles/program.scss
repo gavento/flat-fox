@@ -15,25 +15,25 @@ html, body {
   padding: 5px;
 }
 
-$color-list: #FF7777 #77FF77 #7777FF #77FFFF #FF77FF #FFFF77 #DDDDDD;
+$color-list: #FF8888 #77FF77 #8888FF #77FFFF #FF77FF #FFFF77 #DDDDDD;
 $color-names: R G B C M Y N;
 
 @for $i from 1 through length($color-list) {
 
   .editor .e-#{nth($color-names, $i)} {
-    background: nth($color-list, $i);
+    background: lighten(nth($color-list, $i), 5%);
   }
 
   .editor .e-tint-#{nth($color-names, $i)} {
-    background: nth($color-list, $i);
+    background: lighten(nth($color-list, $i), 15%);
   }
 
   .control .c-#{nth($color-names, $i)} {
-    background: nth($color-list, $i);
+    background-color: nth($color-list, $i);
   }
 
   .p-cell-#{nth($color-names, $i)} {
-    background: nth($color-list, $i);
+    background-color: lighten(nth($color-list, $i), 15%);
   }
 
 }
