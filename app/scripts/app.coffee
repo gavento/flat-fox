@@ -5,7 +5,7 @@ angular.module('flatFoxApp',
   .config ($routeProvider) ->
     $routeProvider
       .when '',
-        templateUrl: 'views/program.html'
+        templateUrl: 'archiv/html/tematka/roc_20/t3/views/program.tmpl'
         controller: 'ProgramCtrl'
       .otherwise
         redirectTo: ''
