@@ -10,6 +10,17 @@ class FlatFoxProgram
     @resizeProgram(w, h)
     @reset()
 
+  # Return a stopped copy of @
+  copy: ->
+    ffp = new FlatFoxProgram(@w, @h)
+    ffp.memory = if @running then @savedMemory[..] else @memory[..]
+    ffp.savedMemory = ffp.memory[..]
+    for y in [0..(h-1)]
+      for x in [0..(w-1)]
+        t = @getTile x, y
+        ffp.setTile x, y, t[0], t[1]
+    return ffp
+
   getTile: (x, y) ->
     row = @program[y]
     if not row? then return @defaultTile
