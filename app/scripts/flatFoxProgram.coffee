@@ -110,15 +110,15 @@ class FlatFoxProgram
 
   statusMessage: ->
     if @headX < 0
-      return { text: "No start (@) found.", type: "error" }
+      return { text: "Chybi startovni pole (@).", type: "error" }
     
     if @finished
-      return { text: "Program finished after #{ @steps } steps.", type: "warning" }
+      return { text: "Program dobehl po #{ @steps } krocich.", type: "warning" }
     
     if @running
-      return { text: "Program running, made #{ @steps } steps.", type: "success" }
+      return { text: "Program spusten, probehlo #{ @steps } kroku.", type: "success" }
 
-    return { text: "FlatFox is flat.", type: "info" }
+    return { text: "FlatFox je placaty :-)", type: "info" }
 
       
 if angular?

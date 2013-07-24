@@ -15,7 +15,7 @@
       <button ng-click="clickStop()" class="btn c-stop" ng-disabled="!program.running"><i class="icon-stop"></i></button>
     </div>
     <label class="c-delay">
-      Delay [ms] <input ng-model="delay" class="span1 c-delay" type="text">
+      Krok [ms] <input ng-model="delay" class="span1 c-delay" type="text">
     </label>
   </div>
 
@@ -45,7 +45,7 @@
     <div class='btn-group' ng-show="enableResize">
       <input type="number" ng-model="setw" class="span1" ng-disabled="program.running">
       <input type="number" ng-model="seth" class="span1" ng-disabled="program.running">
-      <button ng-click="program.resizeProgram(setw, seth)" class="btn" ng-disabled="program.running">Resize</button>
+      <button ng-click="program.resizeProgram(setw, seth)" class="btn" ng-disabled="program.running">Velikost</button>
     </div>
     <!--
 

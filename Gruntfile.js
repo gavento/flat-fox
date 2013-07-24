@@ -249,6 +249,7 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             'zadani.u8.html',
+            'nazov_temy',
             '*.{ico,png,txt}',
             '.htaccess',
 //            'bower_components/**/*',
@@ -294,6 +295,11 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    shell: {
+      MaMify: {
+	command: 'cat <%= yeoman.dist %>/zadani.u8.html | sed \'s%script src="%script src="/archiv/html/tematka/roc_20/t3/%g\' | sed \'s%sheet" href="%sheet" href="/archiv/html/tematka/roc_20/t3/%g\' |iconv -f utf8 -t l2 > <%= yeoman.dist %>/zadani.html; rm <%= yeoman.dist %>/zadani.u8.html <%= yeoman.dist %>/index.html'
+      }
     }
   });
 
@@ -329,11 +335,12 @@ module.exports = function (grunt) {
     'concat',
     'copy',
 //    'cdnify',
-    'ngmin',
-    'cssmin',
+//    'ngmin',
+//    'cssmin',
 //    'uglify',
 //    'rev',
-    'usemin'
+    'usemin',
+    'shell:MaMify'
   ]);
 
   grunt.registerTask('default', [

@@ -7,25 +7,27 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="vendor/angular-ui.css">
     <!-- endbuild -->
-
-    <h1>Dvourozměrné programování</h1>
-
-    <p><i>Milí prázdninoví řešitelé,</i>
-
-    <p>tady pro vás připravujeme stránku s interaktivním editorem a simulátorem FlatFoxu,
-    jeho podrobnějším popisem a několika plochými hlavolamy.
-    Teď si ale Tom užívá své prázdniny a tak na online hračky prosím posečkejte do začátku srpna <tt>:-)</tt>.
-
-    <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
-
-  <div ng-app="flatFoxApp">
     <!--[if lt IE 9]>
       <script src="vendor/es5-shim.js"></script>
       <script src="vendor/json3.js"></script>
     <![endif]-->
 
+    <h1>Dvourozměrné programování</h1>
+
+    <p><i>Milí prázdninoví řešitelé,</i>
+
+    <p>níže pro vás připravujeme interaktivní editor a simulátor FlatFoxu, v plánu jsou i
+    jeho podrobnější popis a několik plochých hlavolamů.
+    Teď si ale Tom užívá své prázdniny a tak na hotové online hračky prosím posečkejte do začátku srpna <tt>:-)</tt>.
+
+    <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
+
+    <div ng-app="flatFoxApp">
+
+    <div class="flatFox" ng-controller='flatFox'>
+
     <!-- Add your site or application content here -->
-    <div class="container" ng-view></div>
+      <div class="container" ng-view></div>
 
     <!-- build:js scripts/angular.js -->
     <script src="bower_components/angular/angular.js"></script>

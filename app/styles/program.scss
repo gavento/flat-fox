@@ -41,10 +41,10 @@ $color-names: R G B C M Y N;
 .editor {
   button {
     font-weight: bold;
+    height: 30px;
   }
   .active {
     border: 2px solid #00000080;
-//  @include single-box-shadow; 
     @include box-shadow(black 0px 0px 5px);
   }
 }
