@@ -2,14 +2,14 @@
 
 angular.module('flatFoxApp')
   .controller 'ProgramCtrl', ($scope, $window, FlatFoxProgram) ->
-    $scope.program = new FlatFoxProgram(10, 5)
+    $scope.program ?= new FlatFoxProgram(10, 5)
     $scope.playing = false
     $scope.delay = 300
     $scope.color = ' '
     $scope.symbol = '.'
     $scope.setw = $scope.program.w
     $scope.seth = $scope.program.h
-    $scope.enableResize = true
+    $scope.enableResize ?= true
 
     $scope.setMessage = (m = "Flat fox is flat and ready", c = "success") ->
       $scope.message = m
