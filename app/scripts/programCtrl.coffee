@@ -1,19 +1,17 @@
 'use strict'
 
 angular.module('flatFoxApp')
+
   .controller 'ProgramCtrl', ($scope, $window, FlatFoxProgram) ->
-    $scope.program ?= new FlatFoxProgram(10, 5)
+    $scope.program ?= new FlatFoxProgram(15, 10)
     $scope.playing = false
     $scope.delay = 300
     $scope.color = ' '
     $scope.symbol = '.'
     $scope.setw = $scope.program.w
     $scope.seth = $scope.program.h
-    $scope.enableResize ?= true
-
-    $scope.setMessage = (m = "Flat fox is flat and ready", c = "success") ->
-      $scope.message = m
-      $scope.messageClass = "alert-" + c
+    $scope.enableResize ?= false
+    $scope.enableSaveLoad ?= true
 
     $scope.play = ->
       if $scope.playing then return
@@ -31,6 +29,7 @@ angular.module('flatFoxApp')
         if not $scope.playing then return
         for i in [1..mult]
           $scope.program.step()
+          $scope.program.message = $scope.program.getStatusMessage()
         if $scope.program.finished or not $scope.program.running
           $scope.playing = false
         if apply
@@ -38,23 +37,29 @@ angular.module('flatFoxApp')
         $window.setTimeout f, d
       f(false)
 
+    $scope.step = ->
+      $scope.program.step()
+      $scope.program.message = $scope.program.getStatusMessage()
+
     $scope.clickStop = ->
       $scope.playing = false
       $scope.program.reset()
+      $scope.program.message = $scope.program.getStatusMessage()
 
     $scope.clickCell = (x, y) ->
       if typeof x == "string" then x = Number(x).toPrecision(1)
       if typeof y == "string" then y = Number(y).toPrecision(1)
       color = if $scope.symbol in ".@#" then " " else $scope.color
       $scope.program.setTile(x, y, color, $scope.symbol)
+      $scope.program.message = $scope.program.getStatusMessage()
 
     $scope.$watch 'color', ->
       if $scope.color == " " and $scope.symbol in ["+", "-"]
         $scope.symbol = "."
 
     $scope.$watch ['program.w', 'program.h'], ->
-      setw = program.w
-      seth = program.h
+      $scope.setw = $scope.program.w
+      $scope.seth = $scope.program.h
 
     $scope.rows = -> [0..($scope.program.h-1)]
     $scope.columns = -> [0..($scope.program.w-1)]
@@ -64,6 +69,25 @@ angular.module('flatFoxApp')
         return "p-head-" + "ULxRD"[$scope.program.dx + 2 * $scope.program.dy + 2]
       return ""
 
+    $scope.save = () ->
+      b = new $window.Blob([$scope.program.programAsText()], {type: 'text/plain'})
+      $window.saveAs(b, "program.txt")
+      $scope.program.message = $scope.program.getStatusMessage()
+
+    $scope.load = () ->
+      el = $('#uploadedFile')
+      $('#loadModal').modal('hide')
+      reader = new FileReader()
+      reader.onload = (loadEvent) ->
+        res = loadEvent.target.result
+        $scope.$apply () ->
+          p = new FlatFoxProgram()
+          if p.parseText(res)
+            $scope.program.parseText(res)
+            if $scope.afterLoad?
+              $scope.afterLoad()
+            $scope.program.message = $scope.program.getStatusMessage()
+      reader.readAsText(el[0].files[0]);
 
   .filter 'tileSymbol', ->
     (symbol) ->
@@ -73,3 +97,14 @@ angular.module('flatFoxApp')
         when "^" then return "<i class='icon-arrow-up'></i>"
         when "v" then return "<i class='icon-arrow-down'></i>"
         else return symbol
+
+
+  .controller 'SmallProgramCtrl', ($scope, FlatFoxProgram) ->
+    $scope.program = new FlatFoxProgram(15, 10)
+    $scope.title = "FlatFox"
+  
+
+  .controller 'BigProgramCtrl', ($scope, FlatFoxProgram) ->
+    $scope.program = new FlatFoxProgram(35, 25)
+    $scope.title = "FlatFox"
+

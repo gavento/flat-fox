@@ -1,4 +1,4 @@
-<div class="program">
+<div class="program" ng-controller='ProgramCtrl'>
 
   <div class="control well well-small form-inline">
     <input type="number" ng-model="program.memory[0]" class="c-R span1" ng-disabled="program.running">
@@ -9,7 +9,7 @@
     <input type="number" ng-model="program.memory[5]" class="c-Y span1" ng-disabled="program.running">
 
     <div class="btn-group">
-      <button ng-click="program.step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
+      <button ng-click="step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
       <button ng-click="play()" class="btn c-start" ng-show="!playing" ng-disabled="program.finished"><i class="icon-play"></i></button>
       <button ng-click="playing = false" class="btn c-pause" ng-show="playing"><i class="icon-pause"></i></button>
       <button ng-click="clickStop()" class="btn c-stop" ng-disabled="!program.running"><i class="icon-stop"></i></button>
@@ -17,6 +17,9 @@
     <label class="c-delay">
       Krok [ms] <input ng-model="delay" class="span1 c-delay" type="text">
     </label>
+    <div class="btn-group pull-right">
+      <button ng-click="runTest()" class="btn btn-primary" ng-show="testCases" ng-disabled="program.running">Otestuj</button>
+    </div>
   </div>
 
   <div class='editor well well-small form-inline'>
@@ -42,10 +45,29 @@
         <button class="btn e-+" ng-model="symbol" btn-radio="'#'">#</button>
     </div>
 
-    <div class='btn-group' ng-show="enableResize">
+    <div class='btn-group pull-right' ng-show="enableResize">
       <input type="number" ng-model="setw" class="span1" ng-disabled="program.running">
       <input type="number" ng-model="seth" class="span1" ng-disabled="program.running">
       <button ng-click="program.resizeProgram(setw, seth)" class="btn" ng-disabled="program.running">Velikost</button>
+    </div>
+
+    <div class='btn-group pull-right' ng-show="enableSaveLoad">
+      <button id="saveButton" class="btn" ng-click="save()">Ulož</button>
+      <button href="#loadModal" role="button" class="btn" data-toggle="modal">Nahraj</button>
+    </div>
+
+    <div id="loadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	<h3 id="myModalLabel">Načtení programu</h3>
+      </div>
+      <div class="modal-body">
+	<p>Zvolte soubor z Vašeho počítače
+	<input type='file' id='uploadedFile'>
+      </div>
+      <div class="modal-footer">
+	<button class="btn primary pull-right" ng-click='load()'>Nahrát</button>
+      </div>
     </div>
     <!--
 
@@ -54,7 +76,7 @@
     -->
   </div>
 
-  <div class="alert {{ 'alert-' + program.statusMessage().type }}">{{ program.statusMessage().text }}</div>
+  <div class="alert {{ 'alert-' + program.message.type }}">{{ program.message.text }}</div>
 
   <div class="program">
     <table>

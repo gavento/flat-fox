@@ -9,16 +9,17 @@ class FlatFoxProgram
     @program = []
     @resizeProgram(w, h)
     @reset()
+    @message = @getStatusMessage()
 
   # Return a stopped copy of @
   copy: ->
     ffp = new FlatFoxProgram(@w, @h)
     ffp.memory = if @running then @savedMemory[..] else @memory[..]
     ffp.savedMemory = ffp.memory[..]
-    for y in [0..(h-1)]
-      for x in [0..(w-1)]
+    for y in [0..(@h-1)]
+      for x in [0..(@w-1)]
         t = @getTile x, y
-        ffp.setTile x, y, t[0], t[1]
+        ffp.setTile x, y, t.color, t.symbol
     return ffp
 
   getTile: (x, y) ->
@@ -39,9 +40,10 @@ class FlatFoxProgram
 
   resizeProgram: (w, h) ->
     p2 = ([] for y in [0..(h-1)])
-    for y in [0..(h-1)]
-      for x in [0..(w-1)]
-        p2[y].push @getTile(x, y)
+    if w > 0 and h > 0
+      for y in [0..(h-1)]
+        for x in [0..(w-1)]
+          p2[y].push @getTile(x, y)
     @w = w
     @h = h
     @program = p2
@@ -64,19 +66,38 @@ class FlatFoxProgram
     [@headX, @headY] = @findStart()
     if @headX < 0 then @running = false
 
-  saveFile: ->
-    b = new window.Blob([@programAsText()], {type: 'text/plain'})
-    window.saveAs(b, "test.txt")
-
   tileToText: (t) -> t.color + t.symbol
 
   programAsText: ->
-    ((@tileToText(@getTile(x,y)) for x in [0..(@w-1)]).join(" ") for y in [0..(@h-1)]).join("\n")
+    ((@tileToText(@getTile(x,y)) for x in [0..(@w-1)]).join(" ") for y in [0..(@h-1)]).join("\n") + "\n"
 
-  loadFile: (evt) ->
-    console.log evt
-    # TODO
-  
+  parseText: (text) ->
+    @resizeProgram(0, 0)
+    lines = text.split(new RegExp("[\n\r]+")) # paranoid about separators ;-)
+    for l in lines
+      tokens = l.split(new RegExp("[\t ]+"))
+      x = 0
+      for t in tokens
+        if t != ""
+          if x == 0 # new non-empty line
+            @resizeProgram(@w, @h + 1)
+          if x >= @w
+            @resizeProgram(x + 1, @h)
+          if t.length == 1
+            t = " " + t
+          if (t.length > 2) or
+              (not t[0] in "RGBCMY ") or
+              ((t[0] in "RGBCMY") and (not t[1] in "<>^v+-")) or
+              ((t[0] == " ") and (not t[1] in ".@#<>^v"))
+            @message = { text: "Chybny retezec '#{ t }' v nacitanem programu.", type: "error" }
+            return false
+          @setTile(x, @h - 1, t[0], t[1])
+          x += 1
+    @savedMemory = [0, 0, 0, 0, 0, 0]
+    @reset()
+    @message = { text: "Nacten program #{ @w }x#{ @h }.", type: "success" }
+    return true
+ 
   findStart: ->
     for x in [0..(@w-1)]
       for y in [0..(@h-1)]
@@ -119,7 +140,7 @@ class FlatFoxProgram
     else
       @finished = true
 
-  statusMessage: ->
+  getStatusMessage: ->
     if @headX < 0
       return { text: "Chybi startovni pole (@).", type: "error" }
     

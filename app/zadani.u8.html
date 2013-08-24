@@ -3,31 +3,33 @@
   $head.='<link rel="stylesheet" href="styles/main.css">'
 ?>
 
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="vendor/angular-ui.css">
-    <!-- endbuild -->
-    <!--[if lt IE 9]>
-      <script src="vendor/es5-shim.js"></script>
-      <script src="vendor/json3.js"></script>
-    <![endif]-->
+  <!-- build:css({.tmp,app}) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="vendor/angular-ui.css">
+  <!-- endbuild -->
+  <!--[if lt IE 9]>
+    <script src="vendor/es5-shim.js"></script>
+    <script src="vendor/json3.js"></script>
+  <![endif]-->
 
-    <h1>Dvourozměrné programování</h1>
+  <h1>Dvourozměrné programování</h1>
 
-    <p><i>Milí prázdninoví řešitelé,</i>
+  <p><i>Milí řešitelé,</i>
 
-    <p>níže pro vás připravujeme interaktivní editor a simulátor FlatFoxu, v plánu jsou i
-    jeho podrobnější popis a několik plochých hlavolamů.
-    Teď si ale Tom užívá své prázdniny a tak na hotové online hračky prosím posečkejte do začátku srpna <tt>:-)</tt>.
+  <p>připravili jsme pro vás interaktivní editor a interpretr FlatFoxu, se kterým si můžete hrát níže.
+  Je možné zvolit si větší plochu i vyzkoušet některý z hlavolamů. Pod plánem najdete pár technických
+  podrobností, které se do článku nevešly. Interpretr by měl fungovat v prohlížečích Chrome 13+, Opera 11+,
+  Firefox 4+ a novějším Safari. Pokud narazíte na problémy (nezobrazí se, nejde spustit, nejde načíst/uložit, ...),
+  dejte mi prosím vědět.
 
-    <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
+  <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
 
-    <div ng-app="flatFoxApp">
-
-    <div class="flatFox" ng-controller='flatFox'>
+  <div ng-app="flatFoxApp">
 
     <!-- Add your site or application content here -->
-      <div class="container" ng-view></div>
+    <div class="container">
+      <div ng-view></div>
+    </div>
 
     <!-- build:js scripts/angular.js -->
     <script src="bower_components/angular/angular.js"></script>
@@ -38,6 +40,7 @@
     <script src="scripts/mainCtrl.js"></script>
     <script src="scripts/programCtrl.js"></script>
     <script src="scripts/flatFoxProgram.js"></script>
+    <script src="scripts/puzzleCtrl.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/modules.js -->
@@ -60,5 +63,51 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="vendor/angular-ui.js"></script>
     <script src="vendor/ui-bootstrap-tpls-0.4.0.js"></script>
+    <script src="vendor/Blob.js"></script>
+    <script src="vendor/saveAs.js"></script>
     <!-- endbuild -->
   </div>
+
+  <h2>Něco o implementaci</h2>
+
+  <p>
+  Teď trochu o tom, jak interpretr funguje. Napsaný je v HTML, Javascriptu a
+  <a href='http://coffeescript.org/'>Coffeescriptu</a> (což je trochu pěknější dialekt Javascriptu)
+  a běží jen u vás v prohlížeči bez jakékoliv potřeby serveru.
+  Program používá frameworky
+  <a href='http://angularjs.org/'>Angular JS</a> pro logiku a synchronizaci prvků a
+  <a href='http://getbootstrap.com/'>Bootstrap</a> pro základní stavební bloky stránky.
+
+  <p>
+  Program je interpretován přímočaře krok za krokem bez jakékoliv kompilace či podobně.
+  I při nastaveném nulovém kroku trvají kroky programu skoro stejně bez ohledu na jejich typ.
+  Maximální rychlost záleží na vašem počítači a prohlížeči - například na mém notebooku
+  s procesorem Intel-i5 2.5 GHz a prohlížečem Chromium 26
+  asi 45 000 kroků za sekundu.
+
+  <p>
+  Zdroják programu si můžete prohlédnout a stáhnout na <a href='https://github.com/gavento/flat-fox'>GitHubu</a>.
+  Bohužel vyvíjím interpretr primárně pro stránky MaM, takže není zatím snadné interpret u sebe spustit
+  (i tak byste potřebovali Linux, nainstalovaný Node.js a pár dalších drobností). Časem bude ale o něco
+  uklizenější.
+
+  <h2>Formát programů</h2>
+
+  <p>
+  Programy jsou ukládány jako textové soubory. Na každém řádku souboru je jeden řádek programu, každé políčko je
+  zapsáno 1-2 znaky a pole jsou odděleny libovolným počtem mezer. Pokud by počet polí na každém řádku nebyl stejný,
+  program je doplněn prázdnými poli na obdélník. Prázdné řádky vstupního souboru jsou ignorovány.
+
+  <p>
+  Pole je popsáno vždy jedním ci dvěma znaky: nejprve volitelnou barvou, která je
+  z <code>RGBCMY</code> (žádná barva znamená "černo-bílá"), a pak symbolem, který je
+  z <code>+-@#.&lt;&gt;^v</code>. Znaky odpovídají znakům v editoru, <code>.</code> je prázdné pole
+  a <code>&lt;&gt;^v</code> vyjadřují šipky. Například <code>@ . R+  Rv R- &lt;</code> je jednořádkový
+  program obsahující start, prázdné pole, červené plus, červenou šipku dolů, červené mínus a nakonec šipku vlevo.
+
+  <p>
+  Náš editor je poměrně jednoduchý a neumožňuje žádné pokročilejší operace, jako je kopírování.
+  Pokud tedy budete chtít dělat složitější či opakující se konstrukce, doporučujeme vám
+  program uložit jako text, upravit ve vašem oblíbném textovém editoru a opět načíst.
+
+

@@ -187,7 +187,7 @@ module.exports = function (grunt) {
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>'],
-	basedir: 'img'
+        basedir: 'img'
       }
     },
     imagemin: {
@@ -230,11 +230,11 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= yeoman.app %>',
           src: [
-	    'index.html',
-//	    'zadani.u8.html',
-	    'views/*.html',
-	    'views/*.tmpl'
-	  ],
+            'index.html',
+//            'zadani.u8.html',
+            'views/*.html',
+            'views/*.tmpl'
+          ],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -298,7 +298,7 @@ module.exports = function (grunt) {
     },
     shell: {
       MaMify: {
-	command: 'cat <%= yeoman.dist %>/zadani.u8.html | sed \'s%script src="%script src="/archiv/html/tematka/roc_20/t3/%g\' | sed \'s%sheet" href="%sheet" href="/archiv/html/tematka/roc_20/t3/%g\' |iconv -f utf8 -t l2 > <%= yeoman.dist %>/zadani.html; rm <%= yeoman.dist %>/zadani.u8.html <%= yeoman.dist %>/index.html'
+        command: 'cat <%= yeoman.dist %>/zadani.u8.html | sed \'s%script src="%script src="/archiv/html/tematka/roc_20/t3/%g\' | sed \'s%sheet" href="%sheet" href="/archiv/html/tematka/roc_20/t3/%g\' |iconv -f utf8 -t l2 > <%= yeoman.dist %>/zadani.html; rm <%= yeoman.dist %>/zadani.u8.html <%= yeoman.dist %>/index.html'
       }
     }
   });
