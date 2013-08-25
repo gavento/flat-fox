@@ -1,0 +1,20 @@
+<div ng-include="" src="'/archiv/html/tematka/roc_20/t3/views/navbar.tmpl'"></div>
+
+<p>
+Cílem je do modrého registru přenést obsah červeného <i>bitově otočený</i>, tedy <i>B=BitRevers(R)</i>.
+Limit počtu kroků je vždy alespoň 100-násobek vstupu v R. Ostatní registry budou nastaveny na 0.
+
+<p>
+Bitově otočený znamená, že <i>B<sub>i</sub> = R<sub>n-i-1</sub></i>, kde <i>n</i> je počet bitů
+a <i>B<sub>i</sub></i> je <i>i</i>-tý bit hodnoty registru B, tedy třeba nejnižší bit registru
+B bude mít hodnotu nejvyššího bitu registru R a tak dále.
+
+<p>
+Příklad 1: <i>BitRevers(77) = BitRevers(1001101<sub>2</sub>) = 1011001<sub>2</sub> = 89</i>
+
+<p>
+Příklad 2: <i>BitRevers(4) = BitRevers(100<sub>2</sub>) = 001<sub>2</sub> = 1<sub>2</sub> = 1</i>
+
+<div class="well">
+  <div ng-controller='ProgramCtrl' ng-include="" src="'/archiv/html/tematka/roc_20/t3/views/program.tmpl'"></div>
+</div>

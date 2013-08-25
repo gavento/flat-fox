@@ -68,6 +68,31 @@
     <!-- endbuild -->
   </div>
 
+  <h2>Jak na to</h2>
+
+  <p>
+  V editoru (druhý řádek tlačítek) vybíráte kombinaci barvy (R, G, B, C, M, Y a černá/žádná) a
+  symbolu (plus/mínus, šipky, prázdné pole, start a konec). Některé kombinace nedávají smysl a ty
+  vám editor nedovolí vybrat. Zvolenou kombinaci aplikujete klikáním na políčka programu.
+
+  <p>
+  Tlačítko <b>Ulož</b> by mělo stáhnout soubor s programem k vám do počítače. Tlačítko
+  <b>Nahraj</b> pak zas zobrazit malý dialog, kde zvolte "Zvolit soubor" (či podobně) a tím vyberete
+  uložený program ze svého disku. Formát souboru je popsán níže.
+
+  <p>Pro ovládání interpretu pro různé zkoušení vašeho prográmku použijte první ovládací řádek.
+  Když program právě neběží, můžete si libovolně nastavit hodnoty registrů.
+  Spustit a sledovat jde program buď krokováním (<i class='icon-step-forward'></i>), nebo
+  plynule se zadanou prodlevou mezi kroky (<i class='icon-play'></i>,
+  <i class='icon-pause'></i> a <i>Krok [ms]</i>). Program je pak potřeba zastavit
+  (<i class='icon-stop'></i>), čímž se obnoví hodnoty registrů do stavu před začátkem spuštění.
+
+  <p>
+  Tlačítko <b>Otestuj</b> se vyskytuje jen u hlavolamů a spustí váš program pro několik různých vstupů
+  a zhodnotí, zda program odpověděl správně či zda se nezacyklil. Test standartně provede 1000 kroků.
+  Pro test není potřeba měnit hodnoty registrů, testuje se jen program a úplně nezávisle na aktuálním stavu
+  krom samotného programu.
+
   <h2>Něco o implementaci</h2>
 
   <p>

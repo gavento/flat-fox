@@ -67,3 +67,54 @@ angular.module('flatFoxApp')
 
     $scope.runTest = ->
       commonRunTest($scope)
+
+
+angular.module('flatFoxApp')
+  .controller 'PuzzleTheAnswerCtrl', ($scope, FlatFoxProgram) ->
+
+    $scope.program = new FlatFoxProgram(7, 3)
+    $scope.title = "FlatFox/TheAnswer"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(7, 3)
+
+    $scope.testCases = [
+      new TestCase(0, 0, 0, 0, 0, 0, (program) -> program.memory[0] == 42)
+      ]
+
+    $scope.runTest = ->
+      commonRunTest($scope)
+
+
+angular.module('flatFoxApp')
+  .controller 'PuzzleTooBigCtrl', ($scope, FlatFoxProgram) ->
+
+    $scope.program = new FlatFoxProgram(14, 7)
+    $scope.title = "FlatFox/TooBig"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(14, 7)
+
+    $scope.testCases = [
+      new TestCase(0, 0, 0, 0, 0, 0, ((program) -> program.memory[0] == 999), 100000)
+      ]
+
+    $scope.runTest = ->
+      commonRunTest($scope)
+
+
+angular.module('flatFoxApp')
+  .controller 'PuzzleBitReversCtrl', ($scope, FlatFoxProgram) ->
+
+    $scope.program = new FlatFoxProgram(14, 7)
+    $scope.title = "FlatFox/BitRevers"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(14, 7)
+
+    $scope.testCases = [
+      new TestCase(0, 0, 0, 0, 0, 0, (program) -> program.memory[2] == 0)
+      new TestCase(1, 0, 0, 0, 0, 0, (program) -> program.memory[2] == 1)
+      new TestCase(8, 0, 0, 0, 0, 0, (program) -> program.memory[2] == 1)
+      new TestCase(77, 0, 0, 0, 0, 0, ((program) -> program.memory[2] == 89), 10000)
+      ]
+
+    $scope.runTest = ->
+      commonRunTest($scope)
