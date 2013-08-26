@@ -18,10 +18,10 @@ angular.module('flatFoxApp')
       $scope.playing = true
 
       mult = 1
-      if $scope.delay > 0.01
+      if $scope.delay > 0.0001
         d = $scope.delay
       else
-        d = 0.01
+        d = 0.0001
       while d < 10
         mult *= 2; d *= 2
 
@@ -105,6 +105,6 @@ angular.module('flatFoxApp')
   
 
   .controller 'BigProgramCtrl', ($scope, FlatFoxProgram) ->
-    $scope.program = new FlatFoxProgram(35, 25)
+    $scope.program = new FlatFoxProgram(30, 20)
     $scope.title = "FlatFox"
 
