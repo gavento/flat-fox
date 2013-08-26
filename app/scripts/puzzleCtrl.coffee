@@ -131,19 +131,20 @@ angular.module('flatFoxApp')
 angular.module('flatFoxApp')
   .controller 'PuzzlePrimeCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
-    $scope.program = new FlatFoxProgram(25, 15)
-    $scope.title = "FlatFox/BitRevers"
+    $scope.program = new FlatFoxProgram(20, 15)
+    $scope.title = "FlatFox/Prime"
     $scope.afterLoad = () ->
-      $scope.program.resizeProgram(25, 15)
+      $scope.program.resizeProgram(20, 15)
 
     $scope.testCases = [
-      new TestCase(2,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
-      new TestCase(5,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
-      new TestCase(8,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
-      new TestCase(47,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
-      new TestCase(49,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
-      new TestCase(143, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
-      new TestCase(139, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
+      new TestCase(2,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 500000)
+      new TestCase(5,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 500000)
+      new TestCase(8,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 500000)
+      new TestCase(47,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 500000)
+      new TestCase(49,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 500000)
+      new TestCase(143, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 5000000)
+      new TestCase(139, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 5000000)
+      new TestCase(199, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 5000000)
       ]
 
     $scope.runTest = ->
