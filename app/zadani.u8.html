@@ -30,6 +30,10 @@
   Firefox 4+ a novějším Safari. Pokud narazíte na problémy (nezobrazí se, nejde spustit, nejde načíst/uložit, ...),
   dejte mi prosím vědět.
 
+  <p>
+  Pro vyjasnění připomínáme, že vyjetí z okraje "plochy" je stejně platné ukončení programu, jako symbol
+  stop (<code>#</code>).
+
   <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
 
   <div ng-app="flatFoxApp">
@@ -100,6 +104,33 @@
   a zhodnotí, zda program odpověděl správně či zda se nezacyklil. Test standartně provede 1000 kroků.
   Pro test není potřeba měnit hodnoty registrů, testuje se jen program a úplně nezávisle na aktuálním stavu
   krom samotného programu.
+
+  <h2>Programování ve FlatFoxu</h2>
+
+  <p>
+  <i>(Část textu zadání témátka v čísle 20.1.)</i>
+
+  <p>
+  Dvojrozměrný program je mřížka příkazů a prázdných políček.
+  Po mřížce se pohybuje <i>hlava</i>, která určuje aktuálně prováděný příkaz programu
+  (můžete si ji představit i jako robota pochodujícího po ploše).
+  Hlava si pamatuje svůj aktuální směr a šest nezáporných celých čísel v registrech pojmenovaných
+  R, G, B, C, M a Y po anglických zkratkách šesti základních barev.
+  Po provedení každého příkazu se hlava posune o na další pole svým směrem a vykoná příkaz,
+  který tam najde, nebo se posunuje dál.
+
+  <p>
+  Mezi základní příkazy patří čtyři černé šipky, které nastavují směr pohybu hlavy.
+  Šipky mohou být i barevné a potom nastaví nový směr pohybu hlavy jen když má registr dané barvy
+  hodnotu 0, jinak hlava pole přejde, jako by bylo prázdné. Barevné jsou i příkazy <code>+</code>
+  a <code>-</code>, které hodnotu stejnobarevného registru zvýší či sníží o 1. Pokud by se měla snížit
+  hodnota registru pod hodnotu 0, nic se nestane. Ještě se v programu musí vyskytnout
+  právě jeden znak <code>@</code>, kde hlava vždy začíná nasměrovaná doprava, a mohou se tam vyskytnout
+  příkazy <code>#</code>, které program zastaví a ukončí. Program skončí i když by hlava měla vyjet
+  z plochy programu. Za vstup programu můžeme považovat počáteční hodnoty některých
+  registrů a za výstup jejich koncové hodnoty. Zaveďme konvenci, že vstup bude primárně registr
+  R (červený) a ostatní registry budou nastaveny na 0, aby je program mohl použít.
+
 
   <h2>Něco o implementaci</h2>
 
