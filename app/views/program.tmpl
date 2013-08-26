@@ -18,7 +18,8 @@
       Krok [ms] <input ng-model="delay" class="span1 c-delay" type="text">
     </label>
     <div class="btn-group pull-right">
-      <button ng-click="runTest()" class="btn btn-primary" ng-show="testCases" ng-disabled="program.running">Otestuj</button>
+      <button ng-click="runTest()" class="btn btn-primary" ng-show="testCases"
+	ng-disabled="program.running || testRunning">Otestuj</button>
     </div>
   </div>
 

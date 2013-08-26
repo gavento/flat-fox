@@ -8,11 +8,9 @@ class TestCase
     program.reset()
     program.memory = [@R, @G, @B, @C, @M, @Y]
     for i in [1..@steps]
-      console.log i, this, program
       program.step()
       if not program.running or program.finished
         break
-    console.log i, this, program
     if not program.finished
       return "Program nedobehl v limitu #{ @steps } kroku"
     if not @check(program)
@@ -20,21 +18,32 @@ class TestCase
     return "OK"
 
 
-commonRunTest = ($scope) ->
-  if $scope.program.headX < 0
-    return false
-  for tc in $scope.testCases
-    p = $scope.program.copy()
-    res = tc.test(p)
-    if res != "OK"
-      $scope.program.message = { text: "Test: " + res + ".", type: "error" } 
-      return false
-  $scope.program.message = { text: "Test v poradku, ukol splnen!", type: "success" } 
-  return true
+angular.module('flatFoxApp').value 'commonRunTest', ($scope, $timeout) ->
+  if $scope.program.headX < 0 or $scope.testRunning
+    return
+  $scope.testRunning = true
+  $scope.program.message = { text: "Testuji ...", type: "info" } 
+  console.log "Testuji ..."
+  
+  fn = -> 
+    for tc in $scope.testCases
+      p = $scope.program.copy()
+      res = tc.test(p)
+      if res != "OK"
+        $scope.program.message = { text: "Test: " + res + ".", type: "error" } 
+        console.log "Test: " + res
+        $scope.testRunning = undefined
+        return
+    $scope.program.message = { text: "Test v poradku, ukol splnen!", type: "success" } 
+    console.log "Test: " + res
+    $scope.testRunning = undefined
+    return
+
+  $timeout fn, 30, true
 
 
 angular.module('flatFoxApp')
-  .controller 'PuzzleZeroCtrl', ($scope, FlatFoxProgram) ->
+  .controller 'PuzzleZeroCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
   
     $scope.program = new FlatFoxProgram(4, 3)
     $scope.title = "FlatFox/Zero"
@@ -48,11 +57,11 @@ angular.module('flatFoxApp')
       ]
 
     $scope.runTest = ->
-      commonRunTest($scope)
+      commonRunTest($scope, $timeout)
   
 
 angular.module('flatFoxApp')
-  .controller 'PuzzleZeroOneLineCtrl', ($scope, FlatFoxProgram) ->
+  .controller 'PuzzleZeroOneLineCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
     $scope.program = new FlatFoxProgram(5, 1)
     $scope.title = "FlatFox/ZeroOneLine"
@@ -66,11 +75,11 @@ angular.module('flatFoxApp')
       ]
 
     $scope.runTest = ->
-      commonRunTest($scope)
+      commonRunTest($scope, $timeout)
 
 
 angular.module('flatFoxApp')
-  .controller 'PuzzleTheAnswerCtrl', ($scope, FlatFoxProgram) ->
+  .controller 'PuzzleTheAnswerCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
     $scope.program = new FlatFoxProgram(7, 3)
     $scope.title = "FlatFox/TheAnswer"
@@ -82,27 +91,27 @@ angular.module('flatFoxApp')
       ]
 
     $scope.runTest = ->
-      commonRunTest($scope)
+      commonRunTest($scope, $timeout)
 
 
 angular.module('flatFoxApp')
-  .controller 'PuzzleTooBigCtrl', ($scope, FlatFoxProgram) ->
+  .controller 'PuzzleTooBigCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
-    $scope.program = new FlatFoxProgram(14, 7)
+    $scope.program = new FlatFoxProgram(10, 6)
     $scope.title = "FlatFox/TooBig"
     $scope.afterLoad = () ->
-      $scope.program.resizeProgram(14, 7)
+      $scope.program.resizeProgram(10, 6)
 
     $scope.testCases = [
-      new TestCase(0, 0, 0, 0, 0, 0, ((program) -> program.memory[0] == 999), 100000)
+      new TestCase(0, 0, 0, 0, 0, 0, ((program) -> program.memory[0] == 59050), 1000000)
       ]
 
     $scope.runTest = ->
-      commonRunTest($scope)
+      commonRunTest($scope, $timeout)
 
 
 angular.module('flatFoxApp')
-  .controller 'PuzzleBitReversCtrl', ($scope, FlatFoxProgram) ->
+  .controller 'PuzzleBitReversCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
     $scope.program = new FlatFoxProgram(14, 7)
     $scope.title = "FlatFox/BitRevers"
