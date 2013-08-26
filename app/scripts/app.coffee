@@ -3,7 +3,7 @@
 angular.module('flatFoxApp',
     ['ui.bootstrap'])
 
-  .config ($routeProvider, $locationProvider, $logProvider) ->
+  .config ($routeProvider, $locationProvider) ->
 
     $locationProvider
       .html5Mode(false)
@@ -37,8 +37,11 @@ angular.module('flatFoxApp',
         templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleBitRevers.tmpl'
         controller: 'PuzzleBitReversCtrl'
 
+      .when '/Prime',
+        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzlePrime.tmpl'
+        controller: 'PuzzlePrimeCtrl'
+
       .otherwise
         redirectTo: ''
 
-#    $logProvider.debugEnabled(true)
 

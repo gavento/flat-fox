@@ -126,4 +126,25 @@ angular.module('flatFoxApp')
       ]
 
     $scope.runTest = ->
-      commonRunTest($scope)
+      commonRunTest($scope, $timeout)
+
+angular.module('flatFoxApp')
+  .controller 'PuzzlePrimeCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
+
+    $scope.program = new FlatFoxProgram(25, 15)
+    $scope.title = "FlatFox/BitRevers"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(25, 15)
+
+    $scope.testCases = [
+      new TestCase(2,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
+      new TestCase(5,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
+      new TestCase(8,   0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
+      new TestCase(47,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
+      new TestCase(49,  0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
+      new TestCase(143, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 0), 3000000)
+      new TestCase(139, 0, 0, 0, 0, 0, ((program) -> program.memory[5] == 1), 3000000)
+      ]
+
+    $scope.runTest = ->
+      commonRunTest($scope, $timeout)
