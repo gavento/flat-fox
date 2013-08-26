@@ -299,6 +299,9 @@ module.exports = function (grunt) {
     shell: {
       MaMify: {
         command: 'cat <%= yeoman.dist %>/zadani.u8.html | sed \'s%script src="%script src="/archiv/html/tematka/roc_20/t3/%g\' | sed \'s%sheet" href="%sheet" href="/archiv/html/tematka/roc_20/t3/%g\' |iconv -f utf8 -t l2 > <%= yeoman.dist %>/zadani.html; rm <%= yeoman.dist %>/zadani.u8.html <%= yeoman.dist %>/index.html'
+      },
+      MaMInstall: {
+        command: 'rsync -r --delete <%= yeoman.dist %>/ atrey:/akce/MaM/WWW/archiv/html/tematka/roc_20/t3/ >&2'
       }
     }
   });
@@ -341,6 +344,11 @@ module.exports = function (grunt) {
 //    'rev',
     'usemin',
     'shell:MaMify'
+  ]);
+
+  grunt.registerTask('install', [
+    'build',
+    'shell:MaMInstall'
   ]);
 
   grunt.registerTask('default', [
