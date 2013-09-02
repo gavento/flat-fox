@@ -113,10 +113,10 @@ angular.module('flatFoxApp')
 angular.module('flatFoxApp')
   .controller 'PuzzleBitReversCtrl', ($scope, FlatFoxProgram, commonRunTest, $timeout) ->
 
-    $scope.program = new FlatFoxProgram(14, 7)
+    $scope.program = new FlatFoxProgram(25, 15)
     $scope.title = "FlatFox/BitRevers"
     $scope.afterLoad = () ->
-      $scope.program.resizeProgram(14, 7)
+      $scope.program.resizeProgram(25, 15)
 
     $scope.testCases = [
       new TestCase(0, 0, 0, 0, 0, 0, (program) -> program.memory[2] == 0)
