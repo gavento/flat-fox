@@ -1,83 +1,39 @@
-<?php 
+<?php
   global $head,$body;
-  $head.='<link rel="stylesheet" href="styles/main.css">'
+  $head.='
+    <link rel="stylesheet" href="FLATFOX_BASE_URL/styles/main.css">
+    <!--[if lt IE 9]>
+      <script src="FLATFOX_BASE_URL/vendor/es5-shim.js"></script>
+      <script src="FLATFOX_BASE_URL/vendor/json3.js"></script>
+    <![endif]-->
+    '
 ?>
 
-  <!-- build:css({.tmp,app}) styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="vendor/angular-ui.css">
-  <!-- endbuild -->
-  <!--[if lt IE 9]>
-    <script src="vendor/es5-shim.js"></script>
-    <script src="vendor/json3.js"></script>
-  <![endif]-->
-
-  <h1>Dvourozměrné programování</h1>
-
-  <p><i>Milí řešitelé,</i>
+  <h1>Dvojrozměrné programování</h1>
 
   <p>
-  připravili jsme pro vás interaktivní editor a interpretr FlatFoxu, se kterým si můžete hrát níže.
-
-  <p>
+  Připravili jsme pro vás interaktivní editor a interpretr FlatFoxu, se kterým si můžete hrát níže.
   <b>Součástí je i několik hlavolamů, za jejichž vyřešení můžete získat body.</b> Až je vyřešíte,
   pošlete nám řešení jako součást řešení témátka (nejlépe elektronicky). Budeme rádi i za
   myšlenku vašeho řešení.
 
   <p>
   Pod aplikací najdete návod a pár technických
-  podrobností, které se do článku nevešly. Interpretr by měl fungovat v prohlížečích Chrome 13+, Opera 11+,
+  podrobností, které se do článku v čísle nevešly. Interpretr by měl fungovat v prohlížečích Chrome 13+, Opera 11+,
   Firefox 4+ a novějším Safari. Pokud narazíte na problémy (nezobrazí se, nejde spustit, nejde načíst/uložit, ...),
   dejte mi prosím vědět.
-
-  <p>
   Pro vyjasnění připomínáme, že vyjetí z okraje "plochy" je stejně platné ukončení programu, jako symbol
   stop (<code>#</code>).
 
   <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
 
-  <div ng-app="flatFoxApp">
-
-    <!-- Add your site or application content here -->
+  <div class="FF-styled" ng-app="flatFoxApp">
     <div class="container">
       <div ng-view></div>
     </div>
-
-    <!-- build:js scripts/angular.js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/app.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/mainCtrl.js"></script>
-    <script src="scripts/programCtrl.js"></script>
-    <script src="scripts/flatFoxProgram.js"></script>
-    <script src="scripts/puzzleCtrl.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js scripts/modules.js -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="vendor/angular-ui.js"></script>
-    <script src="vendor/ui-bootstrap-tpls-0.4.0.js"></script>
-    <script src="vendor/Blob.js"></script>
-    <script src="vendor/FileSaver.js"></script>
-    <!-- endbuild -->
+    <script src="FLATFOX_BASE_URL/scripts/angular.js"></script>
+    <script src="FLATFOX_BASE_URL/scripts/app.js"></script>
+    <script src="FLATFOX_BASE_URL/scripts/modules.js"></script>
   </div>
 
   <h2>Jak na to</h2>

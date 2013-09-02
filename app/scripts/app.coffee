@@ -10,35 +10,35 @@ angular.module('flatFoxApp',
 
     $routeProvider
       .when '',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/plainProgram.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/plainProgram.tmpl'
         controller: 'SmallProgramCtrl'
 
       .when '/Big',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/plainProgram.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/plainProgram.tmpl'
         controller: 'BigProgramCtrl'
 
       .when '/Zero',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleZero.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzleZero.tmpl'
         controller: 'PuzzleZeroCtrl'
 
       .when '/ZeroOneLine',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleZeroOneLine.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzleZeroOneLine.tmpl'
         controller: 'PuzzleZeroOneLineCtrl'
 
       .when '/TheAnswer',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleTheAnswer.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzleTheAnswer.tmpl'
         controller: 'PuzzleTheAnswerCtrl'
 
       .when '/TooBig',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleTooBig.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzleTooBig.tmpl'
         controller: 'PuzzleTooBigCtrl'
 
       .when '/BitRevers',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzleBitRevers.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzleBitRevers.tmpl'
         controller: 'PuzzleBitReversCtrl'
 
       .when '/Prime',
-        templateUrl: 'archiv/html/tematka/roc_20/t3/views/puzzlePrime.tmpl'
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzlePrime.tmpl'
         controller: 'PuzzlePrimeCtrl'
 
       .otherwise

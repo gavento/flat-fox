@@ -28,6 +28,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     yeoman: yeomanConfig,
+    MaMdir: '/temata/20.3',
     watch: {
       coffee: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
@@ -47,6 +48,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
+          '<%= yeoman.app %>/{,*/}*.mod',
           '<%= yeoman.app %>/{,*/}*.tmpl',
           '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
@@ -183,7 +185,7 @@ module.exports = function (grunt) {
       }
     },
     usemin: {
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
+      html: ['<%= yeoman.dist %>/{,*/}*.html', '<%= yeoman.dist %>/{,*/}*.mod'],
       css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>'],
@@ -231,7 +233,6 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           src: [
             'index.html',
-//            'zadani.u8.html',
             'views/*.html',
             'views/*.tmpl'
           ],
@@ -248,7 +249,7 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
-            'zadani.u8.html',
+            'tema.u8.mod',
             'nazov_temy',
             '*.{ico,png,txt}',
             '.htaccess',
@@ -297,11 +298,22 @@ module.exports = function (grunt) {
       }
     },
     shell: {
-      MaMify: {
-        command: 'cat <%= yeoman.dist %>/zadani.u8.html | sed \'s%script src="%script src="/archiv/html/tematka/roc_20/t3/%g\' | sed \'s%sheet" href="%sheet" href="/archiv/html/tematka/roc_20/t3/%g\' |iconv -f utf8 -t l2 > <%= yeoman.dist %>/zadani.html; rm <%= yeoman.dist %>/zadani.u8.html <%= yeoman.dist %>/index.html'
+      MaMPostprocess: {
+        command: // replace FLATFOX_BASE_URL
+		 'find <%= yeoman.dist %> -type f -exec sed -i \'s#FLATFOX_BASE_URL/#<%= MaMdir %>/#g\' {} \\; ;\n' +
+		 // convert encoding of text
+		 'cat <%= yeoman.dist %>/tema.u8.mod |iconv -f utf8 -t l2 > <%= yeoman.dist %>/tema.mod;\n' +
+		 // cleanup
+		 'rm <%= yeoman.dist %>/tema.u8.mod <%= yeoman.dist %>/index.html ;\n'
+      },
+      OtherPostprocess: {
+        command: // replace FLATFOX_BASE_URL
+		 'find <%= yeoman.dist %> -type f -exec sed -i \'s#FLATFOX_BASE_URL/##g\' {} \\; ;\n' +
+		 // cleanup
+		 'rm <%= yeoman.dist %>/tema.u8.mod ;\n'
       },
       MaMInstall: {
-        command: 'rsync -r --delete <%= yeoman.dist %>/ atrey:/akce/MaM/WWW/archiv/html/tematka/roc_20/t3/ >&2'
+        command: 'rsync --chmod=ug+rwX --max-delete=0 --delete -r <%= yeoman.dist %>/ atrey:/akce/MaM/WWW/<%= MaMdir %>/'
       }
     }
   });
@@ -328,7 +340,7 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
-  grunt.registerTask('build', [
+  grunt.registerTask('basic_build', [
     'clean:dist',
     'useminPrepare',
     'coffee',
@@ -343,11 +355,20 @@ module.exports = function (grunt) {
 //    'uglify',
 //    'rev',
     'usemin',
-    'shell:MaMify'
   ]);
 
-  grunt.registerTask('install', [
-    'build',
+  grunt.registerTask('MaMBuild', [
+    'basic_build',
+    'shell:MaMPostprocess',
+  ]);
+
+  grunt.registerTask('build', [
+    'basic_build',
+    'shell:OtherPostprocess',
+  ]);
+
+  grunt.registerTask('MaMInstall', [
+    'MaMBuild',
     'shell:MaMInstall'
   ]);
 

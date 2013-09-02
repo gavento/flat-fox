@@ -9,24 +9,25 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="vendor/angular-ui.css">
-    <!-- endbuild -->
-</head>
-  <body ng-app="flatFoxApp">
-    <!--[if lt IE 7]>
-      <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-    <![endif]-->
 
     <!--[if lt IE 9]>
       <script src="vendor/es5-shim.js"></script>
       <script src="vendor/json3.js"></script>
     <![endif]-->
 
-    <!-- Add your site or application content here -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="vendor/angular-ui.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="flatFoxApp" class="FF-styled">
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an outdated browser.
+	<a href="http://browsehappy.com/">Upgrade your browser today</a> or
+	<a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.
+      </p>
+    <![endif]-->
+
     <div class="container" ng-view=""></div>
 
     <!-- build:js scripts/angular.js -->

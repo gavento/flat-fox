@@ -1,3 +1,10 @@
+@import "bootstrap-sass/lib/variables";
+@import "bootstrap-sass/lib/mixins";
+@import "bootstrap-sass/lib/code";
+@import "bootstrap-sass/lib/sprites";
+
+.FF-styled {
+
 @import "bootstrap-sass/lib/bootstrap";
 @import "compass";
 
@@ -49,3 +56,5 @@ html, body {
     letter-spacing: -1px;
 }
 */
+
+} /* FF-styled */
