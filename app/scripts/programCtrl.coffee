@@ -28,9 +28,10 @@ angular.module('flatFoxApp')
       f = (apply = true)->
         if not $scope.playing then return
         for i in [1..mult]
-          $scope.program.step()
+          if not $scope.program.breakpoint?
+            $scope.program.step()
           $scope.program.message = $scope.program.getStatusMessage()
-        if $scope.program.finished or not $scope.program.running
+        if $scope.program.finished or not $scope.program.running or $scope.program.breakpoint?
           $scope.playing = false
         if apply
           $scope.$apply()
@@ -49,7 +50,7 @@ angular.module('flatFoxApp')
     $scope.clickCell = (x, y) ->
       if typeof x == "string" then x = Number(x).toPrecision(1)
       if typeof y == "string" then y = Number(y).toPrecision(1)
-      color = if $scope.symbol in ".@#" then " " else $scope.color
+      color = if $scope.symbol in ".@#o" then " " else $scope.color
       $scope.program.setTile(x, y, color, $scope.symbol)
       $scope.program.message = $scope.program.getStatusMessage()
 
@@ -99,12 +100,21 @@ angular.module('flatFoxApp')
         else return symbol
 
 
+  .controller 'SmallPPProgramCtrl', ($scope, FlatFoxPPProgram) ->
+    $scope.program = new FlatFoxPPProgram(15, 10)
+    $scope.title = "FlatFox++"
+  
+
+  .controller 'BigPPProgramCtrl', ($scope, FlatFoxPPProgram) ->
+    $scope.program = new FlatFoxPPProgram(30, 20)
+    $scope.title = "FlatFox++"
+
+
   .controller 'SmallProgramCtrl', ($scope, FlatFoxProgram) ->
     $scope.program = new FlatFoxProgram(15, 10)
     $scope.title = "FlatFox"
-  
 
+  
   .controller 'BigProgramCtrl', ($scope, FlatFoxProgram) ->
     $scope.program = new FlatFoxProgram(30, 20)
     $scope.title = "FlatFox"
-

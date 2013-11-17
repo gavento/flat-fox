@@ -9,6 +9,10 @@ angular.module('flatFoxApp',
       .html5Mode(false)
 
     $routeProvider
+      .when '/FFPP',
+        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
+        controller: 'SmallPPProgramCtrl'
+
       .when '',
         templateUrl: 'FLATFOX_BASE_URL/views/plainProgram.tmpl'
         controller: 'SmallProgramCtrl'

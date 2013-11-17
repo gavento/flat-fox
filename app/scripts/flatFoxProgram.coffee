@@ -156,3 +156,5 @@ class FlatFoxProgram
 if angular?
   angular.module('flatFoxApp').value('FlatFoxProgram', FlatFoxProgram)
 
+window.FlatFoxProgram = FlatFoxProgram # hacky hacky
+
