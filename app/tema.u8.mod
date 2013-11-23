@@ -1,3 +1,4 @@
+<!-- vim: set filetype=html :-->
 <?php
   global $head,$body;
   $head.='
@@ -12,20 +13,41 @@
   <h1>Dvojrozměrné programování</h1>
 
   <p>
-  Připravili jsme pro vás interaktivní editor a interpretr FlatFoxu, se kterým si můžete hrát níže.
-  <b>Součástí je i několik hlavolamů, za jejichž vyřešení můžete získat body.</b> Až je vyřešíte,
-  pošlete nám řešení jako součást řešení témátka (nejlépe elektronicky). Budeme rádi i za
-  myšlenku vašeho řešení.
+  K tématu dvojrozměrného programování zde najdete editor FlatFox <i>(FF)</i>, FlatFox++ <i>(FF++)</i>,
+  několik interaktivních hlavolamů a též plné verze účastnických článků s obrázky.
 
-  <p>
-  Pod aplikací najdete návod a pár technických
-  podrobností, které se do článku v čísle nevešly. Interpretr by měl fungovat v prohlížečích Chrome 13+, Opera 11+,
-  Firefox 4+ a novějším Safari. Pokud narazíte na problémy (nezobrazí se, nejde spustit, nejde načíst/uložit, ...),
-  dejte mi prosím vědět.
-  Pro vyjasnění připomínáme, že vyjetí z okraje "plochy" je stejně platné ukončení programu, jako symbol
-  stop (<code>#</code>).
 
-  <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
+  <h2>Obsah</h2>
+
+  <ul>
+  <li><a href="#interpret">Interpret <i>FF</i> a <i>FF++</i></a>
+    <ul>
+    <li><a href="#interpret-jaknato">Jak na to</a>
+    <li><a href="#interpret-implementace">Něco o implementaci</a>
+    <li><a href="#interpret-format">Formát programů</a>
+    </ul>
+  <li><a href="#flatfox">Jazyk FlatFox</a>
+  <li><a href="#flatfoxpp">Jazyk FlatFox++</a>
+  <li><a href="#reseni">Řešení hlavolamů</a>
+  <li><a href="#lieskovsky-1"><i>Matej Lieskovský:</i> FlatFox</a>
+    <ul>
+    <li><a href="#lieskovsky-1-">...</a>
+    </ul>
+  <li><a href="#rozhon-1"><i>Václav Rozhoň:</i> FlatFox</a>
+    <ul>
+    <li><a href="#rozhon-1-">...</a>
+    </ul>
+  </ul>
+
+
+  <h2>Interpret <i>FF</i> a <i>FF++</i><a name="interpret"></a></h2>
+
+  Připravili jsme pro vás interaktivní editor a interpretr FlatFoxu a FlatFox++.
+  <b>Součástí je i několik hlavolamů, za jejichž vyřešení můžete získat body.</b>
+  Úlohy zadané v prvním čísle jsme uzavřeli se třetím číslem. Ve třetím čísle
+  přibyly nové úlohy pro FF++, za které můžete získat body do termínu odeslání páté série.
+  Řešení hlavolamů nám pošlete jako součást řešení témátka (nejlépe elektronicky) nebo jen
+  emailem. Budeme rádi i za myšlenku vašeho řešení.
 
   <div class="FF-styled" ng-app="flatFoxApp">
     <div class="container">
@@ -36,7 +58,15 @@
     <script src="FLATFOX_BASE_URL/scripts/modules.js"></script>
   </div>
 
-  <h2>Jak na to</h2>
+  <p>
+  Interpretr by měl fungovat v prohlížečích Chrome 13+, Opera 11+,
+  Firefox 4+ a novějším Safari. Pokud narazíte na problémy (nezobrazí se,
+  nejde spustit, nejde načíst/uložit, ...), dejte mi prosím vědět.
+
+  <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
+
+
+  <h3>Jak na to<a name="interpret-jaknato"></a></h3> <!-- COLLAPSE, TODO -->
 
   <p>
   V editoru (druhý řádek tlačítek) vybíráte kombinaci barvy (R, G, B, C, M, Y a černá/žádná) a
@@ -61,7 +91,53 @@
   Pro test není potřeba měnit hodnoty registrů, testuje se jen program a úplně nezávisle na aktuálním stavu
   krom samotného programu.
 
-  <h2>Programování ve FlatFoxu</h2>
+
+  <h3>Něco o implementaci<a name="interpret-implementace"></a></h3> <!-- COLLAPSE, TODO -->
+
+  <p>
+  Teď trochu o tom, jak interpretr funguje.
+  Napsaný je v HTML, Javascriptu a
+  <a href='http://coffeescript.org/'>Coffeescriptu</a> (což je trochu pěknější dialekt Javascriptu)
+  a běží jen u vás v prohlížeči bez jakékoliv potřeby serveru.
+  Program používá frameworky
+  <a href='http://angularjs.org/'>Angular JS</a> pro logiku a synchronizaci prvků,
+  <a href='http://getbootstrap.com/'>Bootstrap</a> pro základní stavební bloky stránky a
+  ikony z <a href='http://glyphicons.com/'>Glyphicons</a>.
+
+  <p>
+  Program je interpretován přímočaře krok za krokem bez jakékoliv kompilace či podobně.
+  I při nastaveném nulovém kroku trvají kroky programu skoro stejně bez ohledu na jejich typ.
+  Maximální rychlost záleží na vašem počítači a prohlížeči - například na mém notebooku
+  s procesorem Intel-i5 2.5 GHz a prohlížečem Chromium 26 asi 2 000 000 kroků za sekundu.
+
+  <p>
+  Zdroják programu si můžete prohlédnout a stáhnout na <a href='https://github.com/gavento/flat-fox'>GitHubu</a>.
+  Dokumentace a zdrojový kód jsou z většiny v angličtině, ale texty jsou v češtině.
+  Pro spuštění u sebe na počítači budete potřebovat Linux, <a href='http://nodejs.org/'>Node.js</a> a pár
+  dalších drobností, a též umět spstit několik příkazů v shellu, jak se dočtete v <code>README.md</code>.
+
+
+  <h3>Formát programů<a name="interpret-format"></a></h3> <!-- COLLAPSE, TODO -->
+
+  <p>
+  Programy jsou ukládány jako textové soubory. Na každém řádku souboru je jeden řádek programu, každé políčko je
+  zapsáno 1-2 znaky a pole jsou odděleny libovolným počtem mezer. Pokud by počet polí na každém řádku nebyl stejný,
+  program je doplněn prázdnými poli na obdélník. Prázdné řádky vstupního souboru jsou ignorovány.
+
+  <p>
+  Pole je popsáno vždy jedním ci dvěma znaky: nejprve volitelnou barvou, která je
+  z <code>RGBCMY</code> (žádná barva znamená "černo-bílá"), a pak symbolem, který je
+  z <code>+-@#.&lt;&gt;^v</code>. Znaky odpovídají znakům v editoru, <code>.</code> je prázdné pole
+  a <code>&lt;&gt;^v</code> vyjadřují šipky. Například <code>@ . R+  Rv R- &lt;</code> je jednořádkový
+  program obsahující start, prázdné pole, červené plus, červenou šipku dolů, červené mínus a nakonec šipku vlevo.
+
+  <p>
+  Náš editor je poměrně jednoduchý a neumožňuje žádné pokročilejší operace, jako je kopírování.
+  Pokud tedy budete chtít dělat složitější či opakující se konstrukce, doporučujeme vám
+  program uložit jako text, upravit ve vašem oblíbném textovém editoru a opět načíst.
+
+
+  <h2>Jazyk FlatFox<a name="flatfox"></a></h2>
 
   <p>
   <i>(Část textu zadání témátka v čísle 20.1.)</i>
@@ -87,48 +163,70 @@
   registrů a za výstup jejich koncové hodnoty. Zaveďme konvenci, že vstup bude primárně registr
   R (červený) a ostatní registry budou nastaveny na 0, aby je program mohl použít.
 
+  Pro vyjasnění připomínáme, že vyjetí z okraje "plochy" je stejně platné
+  ukončení programu, jako symbol stop (<code>#</code>).
 
-  <h2>Něco o implementaci</h2>
 
-  <p>
-  Teď trochu o tom, jak interpretr funguje. Napsaný je v HTML, Javascriptu a
-  <a href='http://coffeescript.org/'>Coffeescriptu</a> (což je trochu pěknější dialekt Javascriptu)
-  a běží jen u vás v prohlížeči bez jakékoliv potřeby serveru.
-  Program používá frameworky
-  <a href='http://angularjs.org/'>Angular JS</a> pro logiku a synchronizaci prvků,
-  <a href='http://getbootstrap.com/'>Bootstrap</a> pro základní stavební bloky stránky a
-  ikony z <a href='http://glyphicons.com/'>Glyphicons</a>.
+  <h2>Jazyk FlatFox++<a name="flatfoxpp"></a></h2>
 
   <p>
-  Program je interpretován přímočaře krok za krokem bez jakékoliv kompilace či podobně.
-  I při nastaveném nulovém kroku trvají kroky programu skoro stejně bez ohledu na jejich typ.
-  Maximální rychlost záleží na vašem počítači a prohlížeči - například na mém notebooku
-  s procesorem Intel-i5 2.5 GHz a prohlížečem Chromium 26 asi 2 000 000 kroků za sekundu.
+  <i>(Část textu zadání témátka v čísle 20.3.)</i>
 
   <p>
-  Zdroják programu si můžete prohlédnout a stáhnout na <a href='https://github.com/gavento/flat-fox'>GitHubu</a>.
-  Česká verze upravená pro MaM je ve větvi <code>mam</code>.
-  Bohužel vyvíjím interpretr primárně pro stránky MaM, takže není zatím snadné jej u sebe spustit
-  (i tak byste potřebovali Linux, nainstalovaný Node.js a pár dalších drobností). Časem bude ale o něco
-  uklizenější a použitelný i mimo web MaMka.
+  FlatFox++ je dvourozměrný jazyk zpětně kompatibilní s FlatFoxem.
+  Přibývají hlavně nové instrukce pro efektivnější operace s čísly
+  a jedna instrukce pro ladění programů. Ve většině nových instrukcích má
+  červený registr <code>R</code> speciální roli takzvaného <i>akumulátoru</i>, všechny
+  nové instrukce ho používají jako jeden z operandů. Toto zmenšuje
+  početo nových instrukcí, ale nelze tak například přímo sečíst
+  registry <code>G</code> a <code>B</code>.
 
-  <h2>Formát programů</h2>
+  <ul>
+  <li><code>o</code> &dash; Tato instrukce pozastaví provádění programu, třeba za účelem ladění a inspekce.
+  Rychlou simulaci programu je pak možné obnovit nebo třeba pokračovat krokováním.
+  Při vyhodnocování hlavolamů se pole chová jako prázdné. Tuto instrukci inspirovaly návrhy
+  Mateje Lieskovského a Václava Rozhoně.
+
+  <li><code>R0, G0, B0, C0, M0, Y0</code> &dash; Tyto instrukce přímo vynulují daný registr.
+
+  <li><code>GA, BA, CA, MA, YA</code> &dash; Přičtení <i>(Add)</i> hodnoty k registru <code>R</code>,
+  hodnota zdrojového registru se nezmění.
+
+  <li><code>GS, BS, CS, MS, YS</code> &dash; Odečtení <i>(Substract)</i> hodnoty od registru
+  <code>R</code>, hodnota zdrojového registru se nezmění,
+  pokud by mělo vyjít záporné číslo, výsledkem bude <code>R=0</code>.
+
+  <li><code>GM, BM, CM, MM, YM</code> &dash; Vynásobení <i>(Multiply)</i> registru <code>R</code>
+  jiným registrem.
+
+  <li><code>GD, BD, CD, MD, YD</code> &dash; Vydělení <i>(Divide)</i> registru <code>R</code>
+  jiným registrem se zbytkem.
+  V registru <code>R</code> bude zbytek po dělení (jako bychom od něj opakovaně odečítali, dokud je to možné),
+  ve druhém registru pak podíl.
+
+  <li><code>GL, BL, CL, ML, YL</code> &dash; Zkopírování <i>(Load)</i> hodnoty registru <code>R</code>
+  do jiného registru. Hodnota registru <code>R</code> se nezmění.
+  </ul>
 
   <p>
-  Programy jsou ukládány jako textové soubory. Na každém řádku souboru je jeden řádek programu, každé políčko je
-  zapsáno 1-2 znaky a pole jsou odděleny libovolným počtem mezer. Pokud by počet polí na každém řádku nebyl stejný,
-  program je doplněn prázdnými poli na obdélník. Prázdné řádky vstupního souboru jsou ignorovány.
+  Tyto operace určitě drasticky sníží počet kroků (a též <i>časovou složitost</i>) různých operací.
+  Nabízí se ale otázka, kterých a jak moc. Jak byste upravili programy své
+  či ostatních a jakého zrychlení by tak šlo dosáhnout?
+  Co soudíte o volbě právě tohoto typu rozšíření, jaké to má výhody a nevýhody a proč?
 
   <p>
-  Pole je popsáno vždy jedním ci dvěma znaky: nejprve volitelnou barvou, která je
-  z <code>RGBCMY</code> (žádná barva znamená "černo-bílá"), a pak symbolem, který je
-  z <code>+-@#.&lt;&gt;^v</code>. Znaky odpovídají znakům v editoru, <code>.</code> je prázdné pole
-  a <code>&lt;&gt;^v</code> vyjadřují šipky. Například <code>@ . R+  Rv R- &lt;</code> je jednořádkový
-  program obsahující start, prázdné pole, červené plus, červenou šipku dolů, červené mínus a nakonec šipku vlevo.
+  Zatímco si mnozí všimli, že násobit $a\times b$ nebylo možné rychleji než řádově $a\times b$ kroky,
+  násobit $a\times b$ s pomocí nových instrukcí sčítání a pod. ale <i>bez</i> použití instrukcí
+  pro násobení a dělení lze o dost rychleji než v řádově $\min\{a,b\}$ krocích. Jak na to?
 
   <p>
-  Náš editor je poměrně jednoduchý a neumožňuje žádné pokročilejší operace, jako je kopírování.
-  Pokud tedy budete chtít dělat složitější či opakující se konstrukce, doporučujeme vám
-  program uložit jako text, upravit ve vašem oblíbném textovém editoru a opět načíst.
+  Jaká další zlepšení FlatFoxu++ byste navrhli?
+
+
+  <h2>Řešení hlavolamů<a name="reseni"></a></h2>
+
+  <h2><i>Matej Lieskovský:</i> FlatFox<a name="lieskovsky-1"></a></h2>
+
+
 
 
