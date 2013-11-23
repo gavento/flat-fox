@@ -42,12 +42,12 @@
   </div>
 
   <div class="control well well-small form-inline">
-    <input type="text" ng-model="strMemory[0]" class="c-R span2" ng-disabled="program.running" ng-change="pushStrMemory(0)">
-    <input type="text" ng-model="strMemory[1]" class="c-G span2" ng-disabled="program.running" ng-change="pushStrMemory(1)">
-    <input type="text" ng-model="strMemory[2]" class="c-B span2" ng-disabled="program.running" ng-change="pushStrMemory(2)">
-    <input type="text" ng-model="strMemory[3]" class="c-C span2" ng-disabled="program.running" ng-change="pushStrMemory(3)">
-    <input type="text" ng-model="strMemory[4]" class="c-M span2" ng-disabled="program.running" ng-change="pushStrMemory(4)">
-    <input type="text" ng-model="strMemory[5]" class="c-Y span2" ng-disabled="program.running" ng-change="pushStrMemory(5)">
+    <input type="text" ng-model="memoryStr[0]" class="c-R span2" ng-disabled="program.running" ng-change="pushMemoryStr(0)">
+    <input type="text" ng-model="memoryStr[1]" class="c-G span2" ng-disabled="program.running" ng-change="pushMemoryStr(1)">
+    <input type="text" ng-model="memoryStr[2]" class="c-B span2" ng-disabled="program.running" ng-change="pushMemoryStr(2)">
+    <input type="text" ng-model="memoryStr[3]" class="c-C span2" ng-disabled="program.running" ng-change="pushMemoryStr(3)">
+    <input type="text" ng-model="memoryStr[4]" class="c-M span2" ng-disabled="program.running" ng-change="pushMemoryStr(4)">
+    <input type="text" ng-model="memoryStr[5]" class="c-Y span2" ng-disabled="program.running" ng-change="pushMemoryStr(5)">
   </div>
 
   <div class='editor well well-small form-inline'>
@@ -99,7 +99,7 @@
     <table>
       <tr ng-repeat="y in rows()">
 	<td ng-repeat="x in columns()" ng-click="clickCell(x, y)"
-	  class="{{ 'p-cell-' + program.getTile(x, y).color}} {{ headClassAt(x, y) }}"
+	  class="{{ 'p-cell-' + program.getTile(x, y).color}} {{ headClassAt(x, y) }} {{ trackClassAt(x, y) }}"
 	  ng-bind-html-unsafe="program.getTile(x, y).symbol | tileSymbol">
 	</td>
       </tr>

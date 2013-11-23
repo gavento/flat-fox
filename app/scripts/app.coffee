@@ -9,11 +9,12 @@ angular.module('flatFoxApp',
       .html5Mode(false)
 
     $routeProvider
-      .when '/FFPP',
-        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
-        controller: 'SmallPPProgramCtrl'
 
       .when '',
+        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
+        controller: 'PPSmallProgramCtrl'
+
+      .when '/Small',
         templateUrl: 'FLATFOX_BASE_URL/views/plainProgram.tmpl'
         controller: 'SmallProgramCtrl'
 
@@ -44,6 +45,27 @@ angular.module('flatFoxApp',
       .when '/Prime',
         templateUrl: 'FLATFOX_BASE_URL/views/puzzlePrime.tmpl'
         controller: 'PuzzlePrimeCtrl'
+
+      .when '/PPSmall',
+        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
+        controller: 'PPSmallProgramCtrl'
+
+      .when '/PPBig',
+        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
+        controller: 'PPBigProgramCtrl'
+
+      .when '/PPMultiply',
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzlePPMultiply.tmpl'
+        controller: 'PPPuzzleMultiplyCtrl'
+
+      .when '/PPDivide',
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzlePPDivide.tmpl'
+        controller: 'PPPuzzleDivideCtrl'
+
+      .when '/PPNthPrime',
+        templateUrl: 'FLATFOX_BASE_URL/views/puzzlePPNthPrime.tmpl'
+        controller: 'PPPuzzleNthPrimeCtrl'
+
 
       .otherwise
         redirectTo: ''

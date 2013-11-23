@@ -12,16 +12,18 @@ angular.module('flatFoxApp')
     $scope.seth = $scope.program.h
     $scope.enableResize ?= false
     $scope.enableSaveLoad ?= true
+    $scope.memoryStr = (i.toString() for i in $scope.program.memory)
 
     $scope.play = ->
       if $scope.playing then return
       $scope.playing = true
+      $scope.program.breakpoint = undefined
 
       mult = 1
-      if $scope.delay > 0.0001
+      if $scope.delay > 0.001
         d = $scope.delay
       else
-        d = 0.0001
+        d = 0.001
       while d < 10
         mult *= 2; d *= 2
 
@@ -52,6 +54,7 @@ angular.module('flatFoxApp')
       if typeof y == "string" then y = Number(y).toPrecision(1)
       color = if $scope.symbol in ".@#o" then " " else $scope.color
       $scope.program.setTile(x, y, color, $scope.symbol)
+      $scope.program.computeTracks()
       $scope.program.message = $scope.program.getStatusMessage()
 
     $scope.$watch 'color', ->
@@ -62,12 +65,27 @@ angular.module('flatFoxApp')
       $scope.setw = $scope.program.w
       $scope.seth = $scope.program.h
 
+    $scope.pullMemoryStr = () ->
+      $scope.memoryStr = (i.toString() for i in $scope.program.memory)
+
+    $scope.pushMemoryStr = (i) ->
+      $scope.program.memory[i] = BigInteger($scope.memoryStr[i])
+
+    for i in [0..($scope.program.memory.length-1)]
+      $scope.$watch "program.memory[#{i}]", ->
+        $scope.pullMemoryStr()
+
     $scope.rows = -> [0..($scope.program.h-1)]
     $scope.columns = -> [0..($scope.program.w-1)]
 
     $scope.headClassAt = (x, y) ->
       if $scope.program.headX == x and $scope.program.headY == y
         return "p-head-" + "ULxRD"[$scope.program.dx + 2 * $scope.program.dy + 2]
+      return ""
+
+    $scope.trackClassAt = (x, y) ->
+      if $scope.program.tracksIn?
+        return "p-track-" + ($scope.program.tracksIn[y][x] | $scope.program.tracksOut[y][x])
       return ""
 
     $scope.save = () ->
@@ -87,6 +105,7 @@ angular.module('flatFoxApp')
             $scope.program.parseText(res)
             if $scope.afterLoad?
               $scope.afterLoad()
+            $scope.program.computeTracks()
             $scope.program.message = $scope.program.getStatusMessage()
       reader.readAsText(el[0].files[0]);
 
@@ -100,12 +119,12 @@ angular.module('flatFoxApp')
         else return symbol
 
 
-  .controller 'SmallPPProgramCtrl', ($scope, FlatFoxPPProgram) ->
+  .controller 'PPSmallProgramCtrl', ($scope, FlatFoxPPProgram) ->
     $scope.program = new FlatFoxPPProgram(15, 10)
     $scope.title = "FlatFox++"
   
 
-  .controller 'BigPPProgramCtrl', ($scope, FlatFoxPPProgram) ->
+  .controller 'PPBigProgramCtrl', ($scope, FlatFoxPPProgram) ->
     $scope.program = new FlatFoxPPProgram(30, 20)
     $scope.title = "FlatFox++"
 

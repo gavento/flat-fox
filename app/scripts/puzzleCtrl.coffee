@@ -3,6 +3,12 @@
 class TestCase
 
   constructor: (@R=0, @G=0, @B=0, @C=0, @M=0, @Y=0, @check=null, @steps=1000) ->
+    @R = BigInteger(@R)
+    @G = BigInteger(@G)
+    @B = BigInteger(@B)
+    @C = BigInteger(@C)
+    @M = BigInteger(@M)
+    @Y = BigInteger(@Y)
 
   test: (program) ->
     program.reset()
@@ -149,3 +155,79 @@ angular.module('flatFoxApp')
 
     $scope.runTest = ->
       commonRunTest($scope, $timeout)
+
+
+angular.module('flatFoxApp')
+  .controller 'PPPuzzleMultiplyCtrl', ($scope, FlatFoxPPProgram, commonRunTest, $timeout) ->
+
+    $scope.program = new FlatFoxPPProgram(15, 10)
+    $scope.title = "FlatFox++/Multiply"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(15, 10)
+
+    $scope.testCases = [
+      new TestCase(0,    0,    0, 0, 0, 0, ((program) -> program.memory[0] == 0), 10000)
+      new TestCase(1,    1,    0, 0, 0, 0, ((program) -> program.memory[0] == 1), 10000)
+      new TestCase(42,   0,    0, 0, 0, 0, ((program) -> program.memory[0] == 0), 10000)
+      new TestCase(0,    11,   0, 0, 0, 0, ((program) -> program.memory[0] == 0), 10000)
+      new TestCase(1000, 1000, 0, 0, 0, 0, ((program) -> program.memory[0] == 1000000), 10000)
+      new TestCase(999999, 888888, 0, 0, 0, 0, ((program) -> program.memory[0].compare('888887111112') == 0), 10001)
+      ]
+
+    $scope.runTest = ->
+      for y in [0..($scope.program.h-1)]
+        for x in [0..($scope.program.w-1)]
+          s = ($scope.program.getTile x, y).symbol
+          if s in 'M'
+            $scope.program.message = { text: "Test: Nepovoleny prikaz '" + s + "'.", type: "error" }
+            return
+      commonRunTest($scope, $timeout)
+
+
+angular.module('flatFoxApp')
+  .controller 'PPPuzzleDivideCtrl', ($scope, FlatFoxPPProgram, commonRunTest, $timeout) ->
+
+    $scope.program = new FlatFoxPPProgram(15, 10)
+    $scope.title = "FlatFox++/Divide"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(15, 10)
+
+    $scope.testCases = [
+      new TestCase(1,    1,    0, 0, 0, 0, ((program) -> program.memory[0] == 0 and program.memory[1] == 1), 10000)
+      new TestCase(0,   13,    0, 0, 0, 0, ((program) -> program.memory[0] == 0 and program.memory[1] == 0), 10000)
+      new TestCase(42,   7,    0, 0, 0, 0, ((program) -> program.memory[0] == 0 and program.memory[1] == 6), 10000)
+      new TestCase(100,  3,    0, 0, 0, 0, ((program) -> program.memory[0] == 1 and program.memory[1] == 33), 10000)
+      new TestCase(929939, 7,  0, 0, 0, 0, ((program) -> program.memory[0] == 3 and program.memory[1] == 132848), 10000)
+      new TestCase(977383, 438828, 0, 0, 0, 0, ((program) -> program.memory[0] == 99727 and program.memory[1] == 2), 10000)
+      ]
+
+    $scope.runTest = ->
+      for y in [0..($scope.program.h-1)]
+        for x in [0..($scope.program.w-1)]
+          s = ($scope.program.getTile x, y).symbol
+          if s in 'MD'
+            $scope.program.message = { text: "Test: Nepovoleny prikaz '" + s + "'.", type: "error" }
+            return
+      commonRunTest($scope, $timeout)
+
+
+angular.module('flatFoxApp')
+  .controller 'PPPuzzleNthPrimeCtrl', ($scope, FlatFoxPPProgram, commonRunTest, $timeout) ->
+
+    $scope.program = new FlatFoxPPProgram(15, 10)
+    $scope.title = "FlatFox++/NthPrime"
+    $scope.afterLoad = () ->
+      $scope.program.resizeProgram(15, 10)
+
+    $scope.testCases = [
+      new TestCase(1,    0, 0, 0, 0, 0, ((program) -> program.memory[0] == 2), 10000000)
+      new TestCase(2,    0, 0, 0, 0, 0, ((program) -> program.memory[0] == 3), 10000000)
+      new TestCase(3,    0, 0, 0, 0, 0, ((program) -> program.memory[0] == 5), 10000000)
+      new TestCase(42,   0, 0, 0, 0, 0, ((program) -> program.memory[0] == 181), 10000000)
+      new TestCase(121,  0, 0, 0, 0, 0, ((program) -> program.memory[0] == 661), 10000000)
+      new TestCase(976,  0, 0, 0, 0, 0, ((program) -> program.memory[0] == 7691), 10000000)
+      ]
+
+    $scope.runTest = ->
+      commonRunTest($scope, $timeout)
+
