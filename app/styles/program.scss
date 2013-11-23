@@ -6,6 +6,7 @@
   padding: 5px;
 }
 
+$directions: R L U D;
 $color-list: #FF8888 #77FF77 #8888FF #77FFFF #FF77FF #FFFF77 #DDDDDD;
 $color-names: R G B C M Y N;
 
@@ -61,19 +62,18 @@ $color-names: R G B C M Y N;
     font-weight: bold;
   }
 
-  .p-head-R {
-    background-image: url("../img/head-R.png");
+  @for $i from 1 through 15 {
+    .p-track-#{$i} {
+      background-image: url("../img/track-#{$i}-a.png");
+    }
+  }
+  .p-track-0 {
   }
 
-  .p-head-L {
-    background-image: url("../img/head-L.png");
+  @each $i in $directions {
+    .p-head-#{$i} {
+      background-image: url("../img/head-#{$i}.png");
+    }
   }
 
-  .p-head-U {
-    background-image: url("../img/head-U.png");
-  }
-
-  .p-head-D {
-    background-image: url("../img/head-D.png");
-  }
 }

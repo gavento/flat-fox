@@ -48,6 +48,46 @@ class FlatFoxProgram
     @h = h
     @program = p2
     [@headX, @headY] = @findStart()
+    if @tracksIn? then @computeTracks()
+
+  computeTracks: () ->
+    # arrays[y][x] of bitflags for active entering and leaving directions
+    @tracksIn = ((0 for x in [0..(@w-1)]) for y in [0..(@h-1)])
+    @tracksOut = ((0 for x in [0..(@w-1)]) for y in [0..(@h-1)])
+
+    # d = 0 (up) .. 3 (left)
+    opposite = (d) -> (d + 2) % 4
+    pow = (d) -> 1 << d
+    dx = [0, 1, 0, -1]
+    dy = [-1, 0, 1, 0]
+
+    rec = (x, y, d) =>
+      if x < 0 or y < 0 or x >= @w or y >= @h or (@tracksIn[y][x] & pow(opposite(d)))
+        return
+      @tracksIn[y][x] |= pow(opposite(d))
+      sym = @getTile(x, y).symbol
+      col = @getTile(x, y).color
+      if sym == '#'
+        return
+      if sym in '<>^v'
+        nd = '^>v<'.indexOf(sym)
+        @tracksOut[y][x] |= pow(nd)
+        rec(x + dx[nd], y + dy[nd], nd)
+      if sym not in '<>^v' or col != ' '
+        @tracksOut[y][x] |= pow(d)
+        rec(x + dx[d], y + dy[d], d)
+
+    for x in [0..(@w-1)]
+      for y in [0..(@h-1)]
+        sym = @getTile(x, y).symbol
+        if sym in '<>^v'
+          nd = '^>v<'.indexOf(sym)
+          @tracksOut[y][x] |= pow(nd)
+          rec(x + dx[nd], y + dy[nd], nd)
+        if sym == '@'
+          nd = 1
+          @tracksOut[y][x] |= pow(nd)
+          rec(x + dx[nd], y + dy[nd], nd)
 
   reset: ->
     @memory = @savedMemory[..]

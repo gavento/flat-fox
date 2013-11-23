@@ -1,7 +1,7 @@
 class FlatFoxPPProgram extends FlatFoxProgram
 
   constructor: (w = 1, h = 1) ->
-    @memory = (BigInteger.ZERO for i in [1..6])
+    @memory = (BigInteger(0) for i in [1..6])
     @savedMemory = @memory[..]
     @program = []
     @resizeProgram(w, h)
@@ -43,13 +43,15 @@ class FlatFoxPPProgram extends FlatFoxProgram
     @breakpoint = undefined
     @steps += 1
 
+    console.log @
+
     tile = @getTile @headX, @headY
     s = tile.symbol
     c = tile.color
     ci = @colorIndex c
 
     if s in "^v><"
-      if c == " " or @memory[ci] == 0
+      if c == " " or @memory[ci].isZero()
         switch s
           when "^" then [@dx, @dy] = [0, -1]
           when "v" then [@dx, @dy] = [0, 1]
@@ -59,19 +61,20 @@ class FlatFoxPPProgram extends FlatFoxProgram
     if s == "+"
       @memory[ci] = @memory[ci].add(1)
     if s == "-"
-      @memory[ci] = @memory[ci].substract(1)
+      @memory[ci] = @memory[ci].subtract(1)
       if @memory[ci].isNegative() then @memory[ci] = BigInteger.ZERO
     if s == "0"
-      @memory[ci] = 0
+      @memory[ci] = BigInteger.ZERO
     if s == "A"
       @memory[0] = @memory[0].add(@memory[ci])
     if s == "S"
-      @memory[ci] = @memory[ci].substract(@memory[ci])
+      @memory[ci] = @memory[ci].subtract(@memory[ci])
       if @memory[ci].isNegative() then @memory[ci] = BigInteger.ZERO
     if s == "M"
       @memory[0] = @memory[0].multiply(@memory[ci])
-    if s == "S"
-      [@memory[ci], @memory[0]] = @memory[0].divRem(@memory[ci])
+    if s == "D"
+      if @memory[ci] > 0
+        [@memory[ci], @memory[0]] = @memory[0].divRem(@memory[ci])
     if s == "L"
       @memory[ci] = @memory[0]
 
