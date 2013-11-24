@@ -66,8 +66,9 @@
   <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
 
 
-  <h3>Jak na to<a name="interpret-jaknato"></a></h3> <!-- COLLAPSE, TODO -->
-
+  <div class="hiddenTab" id="t2">
+  <div class="tabTitle" onclick="changeVisibility('t2');"><h3>Jak na to<a name="interpret-jaknato"></a></h3></div>
+  <div class="tabContent">
   <p>
   V editoru (druhý řádek tlačítek) vybíráte kombinaci barvy (R, G, B, C, M, Y a černá/žádná) a
   symbolu (plus/mínus, šipky, prázdné pole, start a konec). Některé kombinace nedávají smysl a ty
@@ -90,10 +91,11 @@
   a zhodnotí, zda program odpověděl správně či zda se nezacyklil. Test standartně provede 1000 kroků.
   Pro test není potřeba měnit hodnoty registrů, testuje se jen program a úplně nezávisle na aktuálním stavu
   krom samotného programu.
+  </div></div>
 
-
-  <h3>Něco o implementaci<a name="interpret-implementace"></a></h3> <!-- COLLAPSE, TODO -->
-
+  <div class="hiddenTab" id="t3">
+  <div class="tabTitle" onclick="changeVisibility('t3');"><h3>Něco o implementaci<a name="interpret-implementace"></a></h3></div>
+  <div class="tabContent">
   <p>
   Teď trochu o tom, jak interpretr funguje.
   Napsaný je v HTML, Javascriptu a
@@ -115,10 +117,11 @@
   Dokumentace a zdrojový kód jsou z většiny v angličtině, ale texty jsou v češtině.
   Pro spuštění u sebe na počítači budete potřebovat Linux, <a href='http://nodejs.org/'>Node.js</a> a pár
   dalších drobností, a též umět spstit několik příkazů v shellu, jak se dočtete v <code>README.md</code>.
+  </div></div>
 
-
-  <h3>Formát programů<a name="interpret-format"></a></h3> <!-- COLLAPSE, TODO -->
-
+  <div class="hiddenTab" id="t4">
+  <div class="tabTitle" onclick="changeVisibility('t4');"><h3>Formát programů<a name="interpret-format"></a></h3></div>
+  <div class="tabContent">
   <p>
   Programy jsou ukládány jako textové soubory. Na každém řádku souboru je jeden řádek programu, každé políčko je
   zapsáno 1-2 znaky a pole jsou odděleny libovolným počtem mezer. Pokud by počet polí na každém řádku nebyl stejný,
@@ -135,6 +138,7 @@
   Náš editor je poměrně jednoduchý a neumožňuje žádné pokročilejší operace, jako je kopírování.
   Pokud tedy budete chtít dělat složitější či opakující se konstrukce, doporučujeme vám
   program uložit jako text, upravit ve vašem oblíbném textovém editoru a opět načíst.
+  </div></div>
 
 
   <h2>Jazyk FlatFox<a name="flatfox"></a></h2>
@@ -227,6 +231,7 @@
 
   <h2><i>Matej Lieskovský:</i> FlatFox<a name="lieskovsky-1"></a></h2>
 
+  <h2><i>Václav Rozhoň:</i> FlatFox<a name="rozhon-1"></a></h2>
 
 
 

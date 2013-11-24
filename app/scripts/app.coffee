@@ -10,10 +10,6 @@ angular.module('flatFoxApp',
 
     $routeProvider
 
-      .when '',
-        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
-        controller: 'PPSmallProgramCtrl'
-
       .when '/Small',
         templateUrl: 'FLATFOX_BASE_URL/views/plainProgram.tmpl'
         controller: 'SmallProgramCtrl'
@@ -68,6 +64,7 @@ angular.module('flatFoxApp',
 
 
       .otherwise
-        redirectTo: ''
+        templateUrl: 'FLATFOX_BASE_URL/views/plainPPProgram.tmpl'
+        controller: 'PPSmallProgramCtrl'
 
 
