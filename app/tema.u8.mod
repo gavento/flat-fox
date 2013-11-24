@@ -13,6 +13,14 @@
       });
     </script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script type="text/javascript">
+    function changeVisibility(id){
+        var element = document.getElementById(id);
+	  if (element) {
+	        element.className=(element.className=="visibleTab")?"hiddenTab":"visibleTab";
+		  }
+    }
+    </script>
     <!--[if lt IE 9]>
       <script src="FLATFOX_BASE_URL/vendor/es5-shim.js"></script>
       <script src="FLATFOX_BASE_URL/vendor/json3.js"></script>
@@ -241,7 +249,54 @@
   <h2>Řešení hlavolamů<a name="reseni"></a></h2>
   </div><div class="tabContent">
 
+  <h3>TheAnswer</h3>
+
+  <p>
+  Tento program jen efektivně násobí $6\times 7$. Hodnota 6 je dosažena dvojitým přejezdem přes
+  tři <code>G+</code>.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/reseni-TheAnswer.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/reseni-TheAnswer.txt'>[zdrojový kód]</a>
+  </div>
+
+  <h3>TooBig</h3>
+
+  <p>
+  Pro tento problém si všimneme, že $59050=3^{10}+1$. Napočítá tedy <code>G=10</code> a <code>R=1</code> a pak
+  opakovaně kopíruje <code>R</code> do <code>B</code> a násobí <code>B</code> třemi do <code>R</code>.
+  Nakonec přičte k <code>R</code> jedna.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/reseni-TooBig.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/reseni-TooBig.txt'>[zdrojový kód]</a>
+  </div>
+
+  <h3>BitRevers</h3>
+
+  <p>
+  Obracení bitů se dá dělat bit po bitu: vydělím vstup dvěma, zbytek po dělení přičtu k výstupu
+  a výstup dvěma vynásobím. Tento program dělá přesně toto, vstup přelívá mezi <code>R</code> a
+  <code>G</code>, výstup mezi <code>B</code> a <code>C</code>.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/reseni-BitRevers.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/reseni-BitRevers.txt'>[zdrojový kód]</a>
+  </div>
+
+  <h3>Prime</h3>
+
+  <p>
+  Tento program je trochu zapeklitější, ale v zásadě jen dělí vstup $n$ postupně čísly
+  $n-1, n-2, \dots, 4, 3, 2$ a sleduje, zda vždy vyjde nenulový zbytek.
+  Mnohem efektivnější řešení najdete v článku Mgr.<sup>MM</sup> Václava Rozhoně níže.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/reseni-Prime.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/reseni-Prime.txt'>[zdrojový kód]</a>
+  </div>
   </div></div>
+
 
   <h2>Dr.<sup>MM</sup> Matej Lieskovský: <i>FlatFox</i><a name="lieskovsky-1"></a></h2>
 
@@ -317,35 +372,35 @@
   <h3>Turingův stroj</h3>
 
   <p>
-  Turingův stroj je teoretický model počítače popsaný Alanem Turingem v~roce 1936. Je vybaven
-  nekonečnou páskou rozdělenou na políčka, kde v~každém políčku je zapsán jeden znak z~nějaké
+  Turingův stroj je teoretický model počítače popsaný Alanem Turingem v roce 1936. Je vybaven
+  nekonečnou páskou rozdělenou na políčka, kde v každém políčku je zapsán jeden znak z nějaké
   předem zvolené abecedy, která je konečná a obsahuje mezeru. Nad páskou se pohybuje hlava, která umí
-  přečíst znak zapsaný v~políčku pod ní a případně jej i přepsat na jiný. Činnost stroje ovládá řídící
-  jednotka, která se vždy nachází v~jednom z~konečného počtu stavů. Program je kromě abecedy a seznamu
+  přečíst znak zapsaný v políčku pod ní a případně jej i přepsat na jiný. Činnost stroje ovládá řídící
+  jednotka, která se vždy nachází v jednom z konečného počtu stavů. Program je kromě abecedy a seznamu
   stavů definován rozhodovací tabulkou, která pro každou kombinaci stavu a znaku pod hlavou určí, zda
-  a na jaký znak  má být políčko pod hlavou přepsáno, zda a kterým směrem se má hlava posunout o~jedno
+  a na jaký znak  má být políčko pod hlavou přepsáno, zda a kterým směrem se má hlava posunout o jedno
   políčko a do kterého stavu se má řídící jednotka přepnout.
 
   <p>
   Navzdory své jednoduchosti je Turingův stroj schopen modelovat jakýkoliv algoritmus. Pokud by se
-  někdo chtěl dovědět o~Turingově stroji více, doporučuju přečíst si
+  někdo chtěl dovědět o Turingově stroji více, doporučuju přečíst si
   <a href='http://ksp.mff.cuni.cz/tasks/26/tasks1.html#task8'>první část letošního
-  seriálu</a> Korespondenčního Semináře z~Programování.
+  seriálu</a> Korespondenčního Semináře z Programování.
 
   <p>
-  Představme si Turingův stroj s~abecedou o~velikosti $a$ a počtem stavů $s$.
+  Představme si Turingův stroj s abecedou o velikosti $a$ a počtem stavů $s$.
   Nejdříve postavíme tu nekonečnou pásku se čtecí hlavou. Pole aktuálně pod čtecí hlavou bude
-  v~registru <code>G</code>, páska před hlavou <code>R</code>, páska za hlavou <code>B</code>,
+  v registru <code>G</code>, páska před hlavou <code>R</code>, páska za hlavou <code>B</code>,
   kde <code>R</code> a <code>B</code> budou zásobníky
-  s~$n=s$. Posun pásky budou zařizovat dva bloky, jeden pro posun dopředu a druhý pro posun dozadu.
+  s $n=s$. Posun pásky budou zařizovat dva bloky, jeden pro posun dopředu a druhý pro posun dozadu.
   Posun dopředu provedeme <code>Push_B(G)</code> a pak <code>G=Pop_R()</code>, pro posun dozadu zaměnit
   <code>R</code> a <code>B</code>.
 
   <p>
-  A~teď rozhodovací tabulka. Nejdříve potřebujeme vědět, jak bude vypadat jedna buňka. Buňka musí být
-  schopná nastavit libovolný stav a zapsat libovolný znak - to určitě umíme v~prostoru o~straně
+  A teď rozhodovací tabulka. Nejdříve potřebujeme vědět, jak bude vypadat jedna buňka. Buňka musí být
+  schopná nastavit libovolný stav a zapsat libovolný znak - to určitě umíme v prostoru o straně
   $O(\sqrt{sa})$ i bez nějakých pokročilejších triků. Zda se má páska posunout doleva, nebo doprava bude
-  určovat, zda buňku opustíme podél její levé, nebo pravé hrany. V~tabulce si tedy nejdříve nalezneme
+  určovat, zda buňku opustíme podél její levé, nebo pravé hrany. V tabulce si tedy nejdříve nalezneme
   řádek odpovídající aktuálnímu stavu a pak sloupec odpovídající aktuální
   hodnotě v <code>G</code> - tím současně obojí vynulujeme.
 
@@ -355,12 +410,12 @@
   </div>
 
   <p>
-  Pro ilustraci jsem sestavil Turingův stroj, který kontroluje, zda je na pásce stejný počet~1~a~2.
+  Pro ilustraci jsem sestavil Turingův stroj, který kontroluje, zda je na pásce stejný počet 1 a 2.
   Jo, je to ten
   nejjednodušší Turingův stroj, který mě napadl, ale myslím, že princip konstrukce libovolného
   jednopáskového Turingova stroje je zřejmý. Dalším krokem by bylo sestrojení Univerzálního Turingova
   stroje (Turingova stroje, který na vstupu dostane popis jiného Turingova stroje a vstup, na který
-  má být tento stroj spuštěn), ale vzhledem k~nízké rychlosti FlatFoxu je takový stroj neprakticky
+  má být tento stroj spuštěn), ale vzhledem k nízké rychlosti FlatFoxu je takový stroj neprakticky
   pomalý i pro triviální vstupy.
 
   Abeceda je $\{0,1,2,3\}$, kde 0 je mezera, 1 a 2 jsou znaky na vstupu a 3 je speciální znak, kterým
@@ -371,7 +426,9 @@
   nenajde, skončí a <code>C</code> bude indikovat, kterého znaku je víc.
   0 značí, že znaků bylo stejně.
 
+
   <h2>Mgr.<sup>MM</sup> Václav Rozhoň: <i>FlatFox</i><a name="rozhon-1"></a></h2>
 
+  <i>Pozn. red.: Na vložení článku na web pracujeme.</i>
 
 
