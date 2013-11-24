@@ -16,7 +16,7 @@
   K tématu dvojrozměrného programování zde najdete editor FlatFox <i>(FF)</i>, FlatFox++ <i>(FF++)</i>,
   několik interaktivních hlavolamů a též plné verze účastnických článků s obrázky.
 
-
+<!--
   <h2>Obsah</h2>
 
   <ul>
@@ -38,7 +38,7 @@
     <li><a href="#rozhon-1-">...</a>
     </ul>
   </ul>
-
+-->
 
   <h2>Interpret <i>FF</i> a <i>FF++</i><a name="interpret"></a></h2>
 
