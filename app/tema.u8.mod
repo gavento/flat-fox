@@ -3,6 +3,16 @@
   global $head,$body;
   $head.='
     <link rel="stylesheet" href="FLATFOX_BASE_URL/styles/main.css">
+    <style> code {color: black; } .ffimg { text-align:center; margin: 5mm; } .ffsrc { display:block; }</style>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	tex2jax: {
+	  inlineMath: [ ["$","$"] ],
+	  processEscapes: true
+	}
+      });
+    </script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     <!--[if lt IE 9]>
       <script src="FLATFOX_BASE_URL/vendor/es5-shim.js"></script>
       <script src="FLATFOX_BASE_URL/vendor/json3.js"></script>
@@ -66,9 +76,9 @@
   <p><i>Tomáš (&#103;avento&#064;ucw&#46;cz)</i>
 
 
-  <div class="hiddenTab" id="t2">
-  <div class="tabTitle" onclick="changeVisibility('t2');"><h3>Jak na to<a name="interpret-jaknato"></a></h3></div>
-  <div class="tabContent">
+  <div class="hiddenTab" id="t2"><div class="tabTitle" onclick="changeVisibility('t2');">
+  <h3>Jak na to?<a name="interpret-jaknato"></a></h3>
+  </div><div class="tabContent">
   <p>
   V editoru (druhý řádek tlačítek) vybíráte kombinaci barvy (R, G, B, C, M, Y a černá/žádná) a
   symbolu (plus/mínus, šipky, prázdné pole, start a konec). Některé kombinace nedávají smysl a ty
@@ -93,9 +103,9 @@
   krom samotného programu.
   </div></div>
 
-  <div class="hiddenTab" id="t3">
-  <div class="tabTitle" onclick="changeVisibility('t3');"><h3>Něco o implementaci<a name="interpret-implementace"></a></h3></div>
-  <div class="tabContent">
+  <div class="hiddenTab" id="t3"><div class="tabTitle" onclick="changeVisibility('t3');">
+  <h3>Něco o implementaci<a name="interpret-implementace"></a></h3>
+  </div><div class="tabContent">
   <p>
   Teď trochu o tom, jak interpretr funguje.
   Napsaný je v HTML, Javascriptu a
@@ -119,9 +129,9 @@
   dalších drobností, a též umět spstit několik příkazů v shellu, jak se dočtete v <code>README.md</code>.
   </div></div>
 
-  <div class="hiddenTab" id="t4">
-  <div class="tabTitle" onclick="changeVisibility('t4');"><h3>Formát programů<a name="interpret-format"></a></h3></div>
-  <div class="tabContent">
+  <div class="hiddenTab" id="t4"><div class="tabTitle" onclick="changeVisibility('t4');">
+  <h3>Formát programů<a name="interpret-format"></a></h3>
+  </div><div class="tabContent">
   <p>
   Programy jsou ukládány jako textové soubory. Na každém řádku souboru je jeden řádek programu, každé políčko je
   zapsáno 1-2 znaky a pole jsou odděleny libovolným počtem mezer. Pokud by počet polí na každém řádku nebyl stejný,
@@ -224,14 +234,144 @@
   pro násobení a dělení lze o dost rychleji než v řádově $\min\{a,b\}$ krocích. Jak na to?
 
   <p>
-  Jaká další zlepšení FlatFoxu++ byste navrhli?
+  Zemí neprobádanou jsou další vylepšení a rozšíření FlatFoxu. Jaká byste navrhli vy?
 
 
+  <div class="hiddenTab" id="t5"><div class="tabTitle" onclick="changeVisibility('t5');">
   <h2>Řešení hlavolamů<a name="reseni"></a></h2>
+  </div><div class="tabContent">
 
-  <h2><i>Matej Lieskovský:</i> FlatFox<a name="lieskovsky-1"></a></h2>
+  </div></div>
 
-  <h2><i>Václav Rozhoň:</i> FlatFox<a name="rozhon-1"></a></h2>
+  <h2>Dr.<sup>MM</sup> Matej Lieskovský: <i>FlatFox</i><a name="lieskovsky-1"></a></h2>
+
+  <h3>Užitečné součástky</h3>
+
+  <p>
+  Když jsem dostal tento programovací jazyk, chvilku jsem si s ním hrál a pak jsem si položil jednoduchou otázku: "Co všechno to umí?"
+  Takový hezký základ by bylo dokázat, že je FlatFox Turingovsky úplný. A to se nejlépe dokazuje odsimulováním Turingova stroje.
+  Jelikož to není úplně triviální, nejdříve si vyrobím několik základních součástek. Které pak budu moct použít (nejen) v Turingově stroji.
+
+  <p>
+  Pokud možno, tak hlava bude vstupovat do komponenty levým horním rohem a opouštět ji levým dolním rohem. Tím docílíme snadnější řetězení operací.
+
+  <div class='ffimg'><img class src='FLATFOX_BASE_URL/mam/lieskovsky-presun.png'></div>
+
+  <p>
+  Pro násobení konstantou přidáme v přesunu další pluska.
+
+  <p>
+  Celočíselné dělení konstantou, ať už jako modulo konstanta (vynecháme <code>G+</code>), dělení beze zbytku (<code>B+</code>),
+  nebo divmod:
+
+  <div class='ffimg'><img class src='FLATFOX_BASE_URL/mam/lieskovsky-divmod.png'></div>
+
+  <p>
+  Jelikož umíme přesouvat mezi registry, můžeme nadefinovat in-place operace, které ale potřebují pomocné registry.
+  Tím se hezky dostáváme k pokročilejší správě registrů. FlatFox má jenom 6 registrů. Pokud chceme z jednoduchých
+  funkcí poskládat větší program, musíme se ujistit, že nám bude 6 registrů stačit. Jednoduché instrukce si vystačí
+  s 2-3 registry, ale co když chceme mít například 10 proměnných? Elegantním  řešením by bylo poskládat několik
+  registrů do jednoho.
+
+  <h4>Zásobník</h4>
+
+  Nejdříve si vyrobme z jednoho registru zásobník. Do zásobníku bude sice možné ukládat pouze čísla od 0 do $n-1$, ale
+  výměnou se nám do něj vejde těchto  čísel libovolně mnoho.
+
+  <p>
+  V ukázce je <code>R</code> prvek, <code>G</code> manipulační prostor a <code>B</code> samotný zásobník.
+  Číslo $n$ je pevně nakódované do toho, jakou konstantou násobím nebo dělím <code>B</code>. Ukázka používá $n=2$.
+
+  <div class='ffimg'>
+    <div class='ffimg'><img class src='FLATFOX_BASE_URL/mam/lieskovsky-stack.png'></div>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/lieskovsky-stack.txt'>[zdrojový kód]</a>
+  </div>
+
+  <p>
+  Celý princip je hezky vidět, pokud si představíme, jak bude číslo v <code>B</code> vypadat v soustavě o základu $n$.
+  Nové prvky jsou pak jen cifry připsané na konec tohoto čísla.
+
+  <h4>Komprese registrů</h4>
+
+  <p>
+  Následující program vezme čísla v <code>R</code> a <code>G</code>,
+  sezipuje jeich binární zápisy dohromady a uloží je do <code>B</code>. Druhý blok je pak zase vyjme.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/lieskovsky-zip.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/lieskovsky-zip.txt'>[zdrojový kód]</a>
+  </div>
+
+  <p>
+  Všimněte si, že k <code>B</code> přičítám a následně odčítám jedničku, která mi indikuje konec "souboru".
+  Jinak by selhalo ukládání pro sudé <code>R</code>.
+  Když program přechází z levého (komprimačního) do pravého (extrahujícího) bloku, jsou všechny registry kromě
+  <code>B</code> prázdné. Umíme tedy, pomocí 2 registrů (a za cenu dalšího spomalení i pouze jednoho) slít dva
+  registry do třetího. Tímto se alespoň částečně zbavujeme omezení na 6 registrů, což se nám jistě bude hodit.
+
+  <p>
+  Tímto končí můj první soupis podprogramů ve FlatFoxu. Pro stavbu Turingova stroje máme již všechny potřebné
+  součástky, dejme se tedy do jeho stavby.
+  Pozn.: Uvedené programy nejsou optimalizovány, snažil jsem se spíše o čitelnost.
+
+  <h3>Turingův stroj</h3>
+
+  <p>
+  Turingův stroj je teoretický model počítače popsaný Alanem Turingem v~roce 1936. Je vybaven
+  nekonečnou páskou rozdělenou na políčka, kde v~každém políčku je zapsán jeden znak z~nějaké
+  předem zvolené abecedy, která je konečná a obsahuje mezeru. Nad páskou se pohybuje hlava, která umí
+  přečíst znak zapsaný v~políčku pod ní a případně jej i přepsat na jiný. Činnost stroje ovládá řídící
+  jednotka, která se vždy nachází v~jednom z~konečného počtu stavů. Program je kromě abecedy a seznamu
+  stavů definován rozhodovací tabulkou, která pro každou kombinaci stavu a znaku pod hlavou určí, zda
+  a na jaký znak  má být políčko pod hlavou přepsáno, zda a kterým směrem se má hlava posunout o~jedno
+  políčko a do kterého stavu se má řídící jednotka přepnout.
+
+  <p>
+  Navzdory své jednoduchosti je Turingův stroj schopen modelovat jakýkoliv algoritmus. Pokud by se
+  někdo chtěl dovědět o~Turingově stroji více, doporučuju přečíst si
+  <a href='http://ksp.mff.cuni.cz/tasks/26/tasks1.html#task8'>první část letošního
+  seriálu</a> Korespondenčního Semináře z~Programování.
+
+  <p>
+  Představme si Turingův stroj s~abecedou o~velikosti $a$ a počtem stavů $s$.
+  Nejdříve postavíme tu nekonečnou pásku se čtecí hlavou. Pole aktuálně pod čtecí hlavou bude
+  v~registru <code>G</code>, páska před hlavou <code>R</code>, páska za hlavou <code>B</code>,
+  kde <code>R</code> a <code>B</code> budou zásobníky
+  s~$n=s$. Posun pásky budou zařizovat dva bloky, jeden pro posun dopředu a druhý pro posun dozadu.
+  Posun dopředu provedeme <code>Push_B(G)</code> a pak <code>G=Pop_R()</code>, pro posun dozadu zaměnit
+  <code>R</code> a <code>B</code>.
+
+  <p>
+  A~teď rozhodovací tabulka. Nejdříve potřebujeme vědět, jak bude vypadat jedna buňka. Buňka musí být
+  schopná nastavit libovolný stav a zapsat libovolný znak - to určitě umíme v~prostoru o~straně
+  $O(\sqrt{sa})$ i bez nějakých pokročilejších triků. Zda se má páska posunout doleva, nebo doprava bude
+  určovat, zda buňku opustíme podél její levé, nebo pravé hrany. V~tabulce si tedy nejdříve nalezneme
+  řádek odpovídající aktuálnímu stavu a pak sloupec odpovídající aktuální
+  hodnotě v <code>G</code> - tím současně obojí vynulujeme.
+
+  <div class='ffimg'>
+    <img class src='FLATFOX_BASE_URL/mam/lieskovsky-turing.png'>
+    <a class='ffsrc' href='FLATFOX_BASE_URL/mam/lieskovsky-turing.txt'>[zdrojový kód]</a>
+  </div>
+
+  <p>
+  Pro ilustraci jsem sestavil Turingův stroj, který kontroluje, zda je na pásce stejný počet~1~a~2.
+  Jo, je to ten
+  nejjednodušší Turingův stroj, který mě napadl, ale myslím, že princip konstrukce libovolného
+  jednopáskového Turingova stroje je zřejmý. Dalším krokem by bylo sestrojení Univerzálního Turingova
+  stroje (Turingova stroje, který na vstupu dostane popis jiného Turingova stroje a vstup, na který
+  má být tento stroj spuštěn), ale vzhledem k~nízké rychlosti FlatFoxu je takový stroj neprakticky
+  pomalý i pro triviální vstupy.
+
+  Abeceda je $\{0,1,2,3\}$, kde 0 je mezera, 1 a 2 jsou znaky na vstupu a 3 je speciální znak, kterým
+  budeme přepisovat už použité znaky.
+  Stavy jsou $\{0,1,2,3\}$, kde 0 je počáteční stav, ve kterém se čtecí hlava vždy přesune na začátek
+  vstupu. Pak stroj přejde do stavu 3, kdy budeme hledat 1 nebo 2, následně přejdeme do odpovídajícího
+  stavu, nalezneme znak opačný a ve stavu 0 se vrátíme na začátek. Pokud algoritmus nějaký znak
+  nenajde, skončí a <code>C</code> bude indikovat, kterého znaku je víc.
+  0 značí, že znaků bylo stejně.
+
+  <h2>Mgr.<sup>MM</sup> Václav Rozhoň: <i>FlatFox</i><a name="rozhon-1"></a></h2>
 
 
 
