@@ -1,12 +1,12 @@
 <div class="program" ng-controller='ProgramCtrl'>
 
   <div class="control well well-small form-inline">
-    <input type="number" ng-model="program.memory[0]" class="c-R span1" ng-disabled="program.running">
-    <input type="number" ng-model="program.memory[1]" class="c-G span1" ng-disabled="program.running">
-    <input type="number" ng-model="program.memory[2]" class="c-B span1" ng-disabled="program.running">
-    <input type="number" ng-model="program.memory[3]" class="c-C span1" ng-disabled="program.running">
-    <input type="number" ng-model="program.memory[4]" class="c-M span1" ng-disabled="program.running">
-    <input type="number" ng-model="program.memory[5]" class="c-Y span1" ng-disabled="program.running">
+    <input type="text" ng-model="memoryStr[0]" class="c-R span1" ng-disabled="program.running" ng-change="pushMemoryStr(0)">
+    <input type="text" ng-model="memoryStr[1]" class="c-G span1" ng-disabled="program.running" ng-change="pushMemoryStr(1)">
+    <input type="text" ng-model="memoryStr[2]" class="c-B span1" ng-disabled="program.running" ng-change="pushMemoryStr(2)">
+    <input type="text" ng-model="memoryStr[3]" class="c-C span1" ng-disabled="program.running" ng-change="pushMemoryStr(3)">
+    <input type="text" ng-model="memoryStr[4]" class="c-M span1" ng-disabled="program.running" ng-change="pushMemoryStr(4)">
+    <input type="text" ng-model="memoryStr[5]" class="c-Y span1" ng-disabled="program.running" ng-change="pushMemoryStr(5)">
 
     <div class="btn-group">
       <button ng-click="step()" class="btn c-step" ng-disabled="program.finished"><i class="icon-step-forward"></i></button>
