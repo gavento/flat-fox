@@ -4,7 +4,7 @@ class FlatFoxProgram
   defaultTile: {symbol: ".", color: " " }
 
   constructor: (w = 1, h = 1) ->
-    @memory = [0, 0, 0, 0, 0, 0]
+    @memory = (BigInteger.ZERO for i in [0..5])
     @savedMemory = @memory[..]
     @program = []
     @resizeProgram(w, h)
@@ -102,6 +102,7 @@ class FlatFoxProgram
     if @running then return
     @running = true
 
+    @memory = (BigInteger(i) for i in @memory)
     @savedMemory = @memory[..]
     [@headX, @headY] = @findStart()
     if @headX < 0 then @running = false
@@ -133,7 +134,7 @@ class FlatFoxProgram
             return false
           @setTile(x, @h - 1, t[0], t[1])
           x += 1
-    @savedMemory = [0, 0, 0, 0, 0, 0]
+    @savedMemory = (BigInteger(0) for i in [0..5])
     @reset()
     @message = { text: "Nacten program #{ @w }x#{ @h }.", type: "success" }
     return true
@@ -158,7 +159,7 @@ class FlatFoxProgram
     ci = @colorIndex c
 
     if s in "^v><"
-      if c == " " or @memory[ci] == 0
+      if c == " " or @memory[ci].isZero()
         switch s
           when "^" then [@dx, @dy] = [0, -1]
           when "v" then [@dx, @dy] = [0, 1]
@@ -166,9 +167,10 @@ class FlatFoxProgram
           when "<" then [@dx, @dy] = [-1, 0]
 
     if s == "+"
-      @memory[ci] += 1
+      @memory[ci] = @memory[ci].add(1)
     if s == "-"
-      if @memory[ci] > 0 then @memory[ci] -= 1
+      @memory[ci] = @memory[ci].subtract(1)
+      if @memory[ci].isNegative() then @memory[ci] = BigInteger.ZERO
     if s == "#"
       @finished = true
         

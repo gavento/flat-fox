@@ -8,6 +8,17 @@ class FlatFoxPPProgram extends FlatFoxProgram
     @reset()
     @message = @getStatusMessage()
 
+  # Return a stopped copy of @
+  copy: ->
+    ffp = new FlatFoxPPProgram(@w, @h)
+    ffp.memory = if @running then @savedMemory[..] else @memory[..]
+    ffp.savedMemory = ffp.memory[..]
+    for y in [0..(@h-1)]
+      for x in [0..(@w-1)]
+        t = @getTile x, y
+        ffp.setTile x, y, t.color, t.symbol
+    return ffp
+
   parseText: (text) ->
     @resizeProgram(0, 0)
     lines = text.split(new RegExp("[\n\r]+")) # paranoid about separators ;-)
@@ -43,8 +54,6 @@ class FlatFoxPPProgram extends FlatFoxProgram
     @breakpoint = undefined
     @steps += 1
 
-    console.log @
-
     tile = @getTile @headX, @headY
     s = tile.symbol
     c = tile.color
@@ -68,12 +77,12 @@ class FlatFoxPPProgram extends FlatFoxProgram
     if s == "A"
       @memory[0] = @memory[0].add(@memory[ci])
     if s == "S"
-      @memory[ci] = @memory[ci].subtract(@memory[ci])
-      if @memory[ci].isNegative() then @memory[ci] = BigInteger.ZERO
+      @memory[0] = @memory[0].subtract(@memory[ci])
+      if @memory[0].isNegative() then @memory[0] = BigInteger.ZERO
     if s == "M"
       @memory[0] = @memory[0].multiply(@memory[ci])
     if s == "D"
-      if @memory[ci] > 0
+      if @memory[ci].isPositive()
         [@memory[ci], @memory[0]] = @memory[0].divRem(@memory[ci])
     if s == "L"
       @memory[ci] = @memory[0]
